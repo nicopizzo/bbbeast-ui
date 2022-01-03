@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nft.ui", "nft.ui\nft.ui.csproj", "{8444CC20-3CC1-494B-9B2D-006FDAEC060B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "nft.contract", "nft.contract\nft.contract.csproj", "{9BB28973-BC82-483B-B63D-04D969203D18}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{914B1546-EC33-4FEF-AC94-3B84D0D6036B}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8444CC20-3CC1-494B-9B2D-006FDAEC060B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8444CC20-3CC1-494B-9B2D-006FDAEC060B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8444CC20-3CC1-494B-9B2D-006FDAEC060B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8444CC20-3CC1-494B-9B2D-006FDAEC060B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BB28973-BC82-483B-B63D-04D969203D18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BB28973-BC82-483B-B63D-04D969203D18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BB28973-BC82-483B-B63D-04D969203D18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BB28973-BC82-483B-B63D-04D969203D18}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {36B0AA04-65A9-4278-B98C-991B634F03C2}
+	EndGlobalSection
+EndGlobal

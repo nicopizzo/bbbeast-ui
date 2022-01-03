@@ -1,0 +1,72 @@
+﻿@page "/"
+
+@using MetaMask.Blazor
+@using MetaMask.Blazor.Enums
+@inject MetaMaskService _metaMaskService
+@inject IToastService _toastService
+@inject IMintingService _mintingService
+
+<PageTitle>NFT</PageTitle>
+
+<div class=container>
+    <div class=row>
+       @if (!hasMetaMask)
+       {
+            <p>Please install metamask to continue</p>
+        }
+        else if (!isSiteConnected)
+        {
+            <p>Please connect wallet to continue</p>
+            <button @onclick="() => _metaMaskService.ConnectMetaMask()">Connect Wallet</button>
+        }
+        else
+        {
+            <p>Create minting transaction below</p>
+            <div class=row>
+                <input type='number' @bind=mintCount />
+                <button @onclick="() => Mint()">Mint</button>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+@code{
+    private bool hasMetaMask;
+    private bool isSiteConnected;
+    private int mintCount;
+
+    protected async override Task OnInitializedAsync()
+    {
+        hasMetaMask = await _metaMaskService.HasMetaMask();
+        isSiteConnected = await _metaMaskService.IsSiteConnected();
+
+        MetaMaskService.AccountChangedEvent += AccountChanged;
+        MetaMaskService.ChainChangedEvent += ChainChanged;
+
+        await _metaMaskService.ListenToEvents();
+
+    }
+
+    private async Task Mint()
+    {
+        var address = await _metaMaskService.GetSelectedAddress();
+        await _mintingService.MintNFT(mintCount);
+    }
+
+    private async Task AccountChanged(string t)
+    {
+        _toastService.ShowWarning("Account changed");
+        isSiteConnected = await _metaMaskService.IsSiteConnected();
+        //todo force reload
+    }
+
+    private async Task ChainChanged((long, Chain) t)
+    {
+        _toastService.ShowWarning("Chain Changed");
+        isSiteConnected = await _metaMaskService.IsSiteConnected();
+    }
+
+}
