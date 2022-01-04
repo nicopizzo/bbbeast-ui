@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace nft.contract
 {
     public static class NFTContractConfiguration
     {
-        //public static IServiceCollection AddNFTContract(this IServiceCollection services, IConfiguration config)
-        //{
-        //    services.AddTransit<INFTService, NFTService>();
-        //}
+        public static IServiceCollection AddNFTContract(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddTransient<INFTService, NFTService>();
+            return services;
+        }
     }
 }

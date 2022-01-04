@@ -1,72 +1,150 @@
 ﻿@page "/"
-
 @using MetaMask.Blazor
 @using MetaMask.Blazor.Enums
-@inject MetaMaskService _metaMaskService
+@using MetaMask.Blazor.Exceptions;
+@using System.Numerics
+
 @inject IToastService _toastService
 @inject IMintingService _mintingService
+@inject MetaMaskService _metaMaskService
+@inject Web3Options _web3Options
 
 <PageTitle>NFT</PageTitle>
 
-<div class=container>
-    <div class=row>
+<div class="container">
+    <div class="row">
        @if (!hasMetaMask)
        {
-            <p>Please install metamask to continue</p>
+            <p>No MetaMask detected. Please install <a href="https://metamask.io" target="_blank">MetaMask</a>.</p>
         }
-        else if (!isSiteConnected)
+        else if (string.IsNullOrEmpty(selectedAddress))
         {
-            <p>Please connect wallet to continue</p>
-            <button @onclick="() => _metaMaskService.ConnectMetaMask()">Connect Wallet</button>
+            <button @onclick="ConnectWallet">Connect Wallet</button>
+        }
+        else if(_web3Options.ChainId != chainId)
+        {
+            <p>Wrong network selected. Please change to @_web3Options.Network</p>
         }
         else
         {
-            <p>Create minting transaction below</p>
-            <div class=row>
-                <input type='number' @bind=mintCount />
-                <button @onclick="() => Mint()">Mint</button>
+            <div class="row">
+                <p>Create minting transaction below</p>
+                <p>Selected Address: @selectedAddress</p>
+            </div>
+            <div class="row">
+                <input type="number" @bind=mintCount />
+                <button @onclick="Mint">Mint</button>
             </div>
         }
     </div>
 </div>
 
 
-
-
 @code{
     private bool hasMetaMask;
-    private bool isSiteConnected;
+    private string selectedAddress;
+    private long chainId = -1;
     private int mintCount;
 
     protected async override Task OnInitializedAsync()
     {
-        hasMetaMask = await _metaMaskService.HasMetaMask();
-        isSiteConnected = await _metaMaskService.IsSiteConnected();
-
         MetaMaskService.AccountChangedEvent += AccountChanged;
         MetaMaskService.ChainChangedEvent += ChainChanged;
 
-        await _metaMaskService.ListenToEvents();
+        hasMetaMask = await _metaMaskService.HasMetaMask();
+        if (hasMetaMask) await _metaMaskService.ListenToEvents();
 
+        bool isSiteConnected = await _metaMaskService.IsSiteConnected();
+        if (isSiteConnected)
+        {
+            await GetSelectedAddress();
+            await GetSelectedNetwork();
+        }
     }
 
     private async Task Mint()
     {
-        var address = await _metaMaskService.GetSelectedAddress();
         await _mintingService.MintNFT(mintCount);
+    }
+
+    private async Task ConnectWallet()
+    {
+        await _metaMaskService.ConnectMetaMask();
+        await GetSelectedAddress();
+        await GetSelectedNetwork();
+    }
+
+    private async Task GetSelectedAddress()
+    {
+        selectedAddress = await _metaMaskService.GetSelectedAddress();
+    }
+
+    private async Task GetSelectedNetwork()
+    {
+        var chainInfo = await _metaMaskService.GetSelectedChain();
+        chainId = chainInfo.chainId;
     }
 
     private async Task AccountChanged(string t)
     {
-        _toastService.ShowWarning("Account changed");
-        isSiteConnected = await _metaMaskService.IsSiteConnected();
-        //todo force reload
+        if(string.IsNullOrEmpty(t))
+        {
+            selectedAddress = null;
+            _toastService.ShowWarning("Wallet signed out");  
+        }
+        else
+        {
+            await GetSelectedAddress();
+        }
+        StateHasChanged();
     }
 
     private async Task ChainChanged((long, Chain) t)
     {
         _toastService.ShowWarning("Chain Changed");
-        isSiteConnected = await _metaMaskService.IsSiteConnected();
+        await GetSelectedNetwork();
+        StateHasChanged();
     }
 
+    private async Task CallSmartContractFunctionExample2()
+        {
+            try
+            {
+                string address = "0x722BcdA7BD1a0f8C1c9b7c0eefabE36c1f0fBF2a";
+                BigInteger weiValue = 1000000000000000;
+                string data = GetEncodedFunctionCallExample2();
+
+                data = data[2..]; //Remove the 0x from the generated string
+                var result = await _metaMaskService.SendTransaction(address, weiValue, data);
+                //FunctionResult = $"TX Hash: {result}";
+            }
+            catch (UserDeniedException)
+            {
+                //FunctionResult = "User Denied";
+            }
+            catch (Exception ex)
+            {
+                //FunctionResult = $"Exception: {ex}";
+            }
+        }
+
+        private string GetEncodedFunctionCallExample2()
+        {
+            //This example uses Nethereum.ABI to create the ABI encoded string to call a smart contract function
+
+            //Smart contract has a function called "share"
+            FunctionABI function = new FunctionABI("setColor", false);
+
+            //With 4 inputs
+            var inputsParameters = new[] {
+                    new Parameter("string", "color")
+                };
+            function.InputParameters = inputsParameters;
+
+            var functionCallEncoder = new FunctionCallEncoder();
+
+            var data = functionCallEncoder.EncodeRequest(function.Sha3Signature, inputsParameters, new object[] { "green" });
+
+            return data;
+        }
 }
