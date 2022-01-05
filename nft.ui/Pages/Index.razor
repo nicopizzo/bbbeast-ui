@@ -34,8 +34,12 @@
                 <p>Minted: @accountMinted / @_web3Options.MaxMintCount</p>
             </div>
             <div class="row">
-                <input type="number" @bind=mintCount />
-                <button @onclick="Mint" disabled=@(accountMinted == _web3Options.MaxMintCount)>Mint</button>
+                <EditForm Model="@mintModel" OnValidSubmit="@Mint">
+                    <DataAnnotationsValidator />
+
+                    <InputNumber @bind-Value="mintModel.MintCount" min="1" max="@_web3Options.MaxMintCount" step="1" />
+                    <button type="submit" disabled=@(accountMinted == _web3Options.MaxMintCount)>Mint</button>
+                </EditForm>            
             </div>
         }
     </div>
@@ -46,8 +50,8 @@
     private bool hasMetaMask;
     private string selectedAddress;
     private long chainId = -1;
-    private int mintCount = 1;
     private int accountMinted = 0;
+    private MintModel mintModel = new();
 
     protected async override Task OnInitializedAsync()
     {
@@ -69,8 +73,8 @@
     {
         try
         {
-            BigInteger weiValue = BigInteger.Multiply(BigInteger.Parse(_web3Options.MintCost), mintCount);
-            string data = _nftEncoding.GetMintFunctionEncoding(mintCount);
+            BigInteger weiValue = BigInteger.Multiply(BigInteger.Parse(_web3Options.MintCost), mintModel.MintCount);
+            string data = _nftEncoding.GetMintFunctionEncoding(mintModel.MintCount);
 
             var result = await _metaMaskService.SendTransaction(_web3Options.ContractAddress, weiValue, data[2..]);
             _toastService.ShowSuccess($"Transaction sent: {result}");
