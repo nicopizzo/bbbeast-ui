@@ -4,6 +4,6 @@ namespace nft.contract.query
 {
     public interface INFTQuery
     {
-        Task<BigInteger> GetNFTCount(string address);
+        Task<int> GetNFTCount(string address);
     }
 }

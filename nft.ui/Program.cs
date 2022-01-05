@@ -14,7 +14,7 @@ var web3Options = new Web3Options();
 builder.Configuration.Bind("Web3", web3Options);
 builder.Services.AddSingleton(web3Options);
 
-builder.Services.AddNFTContractInteraction();
+builder.Services.AddNFTContractInteraction(builder.Configuration);
 builder.Services.AddMetaMaskBlazor();
 builder.Services.AddBlazoredToast();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });

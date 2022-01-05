@@ -15,18 +15,32 @@ namespace nft.contract.query
     {
         private ContractHandler _ContractHandler;
 
-        //public NFTQuery(IWeb3 web3, string contractAddress)
-        //{
-        //    _ContractHandler = web3.Eth.GetContractHandler(contractAddress);
-        //}
-
-        public async Task<BigInteger> GetNFTCount(string address)
+        public NFTQuery(IWeb3 web3, string contractAddress)
         {
-            IClient clinet = new RpcClient(new Uri("HTTP://127.0.0.1:7545"));
+            _ContractHandler = web3.Eth.GetContractHandler(contractAddress);
+        }
 
-            Web3 d = new Web3(clinet);
-            var h = d.Eth.GetContractHandler("0x383DE243280fb5ddcf2306624f383EC7D8a47c1d");
-            return await h.QueryAsync<BalanceOfQuery, BigInteger>();
+        public async Task<int> GetNFTCount(string address)
+        {
+            try
+            {
+                IClient clinet = new RpcClient(new Uri("HTTP://127.0.0.1:7545"));
+
+                Web3 d = new Web3(clinet);
+                var h = d.Eth.GetContractHandler("0xe46dab9FA9ecb10da980c7BE8138a26013153eF3");
+
+                var balanceOfFunction = new BalanceOfQuery()
+                {
+                    Owner = address
+                };
+
+                var result = await _ContractHandler.QueryAsync<BalanceOfQuery, int>(balanceOfFunction);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
         }
     }
 }

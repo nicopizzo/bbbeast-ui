@@ -47,7 +47,7 @@
     private string selectedAddress;
     private long chainId = -1;
     private int mintCount = 1;
-    private BigInteger accountMinted = 0;
+    private int accountMinted = 0;
 
     protected async override Task OnInitializedAsync()
     {
@@ -69,12 +69,12 @@
     {
         try
         {
-            BigInteger weiValue = BigInteger.Multiply(10000000000000000, mintCount);
+            BigInteger weiValue = BigInteger.Multiply(_web3Options.MintCost, mintCount);
             string data = _nftEncoding.GetMintFunctionEncoding(mintCount);
 
-            data = data[2..]; //Remove the 0x from the generated string
-            var result = await _metaMaskService.SendTransaction(_web3Options.ContractAddress, weiValue, data);
+            var result = await _metaMaskService.SendTransaction(_web3Options.ContractAddress, weiValue, data[2..]);
             _toastService.ShowSuccess($"Transaction sent: {result}");
+            await GetSelectedAddress();
         }
         catch (UserDeniedException)
         {
@@ -96,10 +96,7 @@
     private async Task GetSelectedAddress()
     {
         selectedAddress = await _metaMaskService.GetSelectedAddress();
-        if (!string.IsNullOrEmpty(selectedAddress))
-        {
-            accountMinted = await _nftQuery.GetNFTCount(selectedAddress);
-        }
+        accountMinted = await _nftQuery.GetNFTCount(selectedAddress);
     }
 
     private async Task GetSelectedNetwork()
