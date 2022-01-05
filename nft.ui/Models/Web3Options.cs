@@ -5,5 +5,6 @@
         public string Network { get; set; }
         public long ChainId { get; set; }
         public string ContractAddress { get; set; }
+        public int MaxMintCount { get; set; }
     }
 }

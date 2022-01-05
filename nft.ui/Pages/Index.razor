@@ -6,6 +6,7 @@
 
 @inject IToastService _toastService
 @inject INFTEncoding _nftEncoding
+@inject INFTQuery _nftQuery
 @inject MetaMaskService _metaMaskService
 @inject Web3Options _web3Options
 
@@ -30,6 +31,7 @@
             <div class="row">
                 <p>Create minting transaction below</p>
                 <p>Selected Address: @selectedAddress</p>
+                <p>Minted: @accountMinted / @_web3Options.MaxMintCount</p>
             </div>
             <div class="row">
                 <input type="number" @bind=mintCount />
@@ -44,7 +46,8 @@
     private bool hasMetaMask;
     private string selectedAddress;
     private long chainId = -1;
-    private int mintCount;
+    private int mintCount = 1;
+    private BigInteger accountMinted = 0;
 
     protected async override Task OnInitializedAsync()
     {
@@ -93,6 +96,10 @@
     private async Task GetSelectedAddress()
     {
         selectedAddress = await _metaMaskService.GetSelectedAddress();
+        if (!string.IsNullOrEmpty(selectedAddress))
+        {
+            accountMinted = await _nftQuery.GetNFTCount(selectedAddress);
+        }
     }
 
     private async Task GetSelectedNetwork()

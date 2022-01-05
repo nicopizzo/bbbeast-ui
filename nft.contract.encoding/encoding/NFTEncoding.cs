@@ -14,7 +14,7 @@ namespace nft.contract.encoding
 
         public string GetPrivateSaleMintFunctionEncoding(int mintCount)
         {
-            FunctionABI function = new FunctionABI("mint", false);
+            FunctionABI function = new FunctionABI("privateSaleMint", false);
             return CreateMintEncoding(function, mintCount);
         }
 

@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\nft.contract.encoding\nft.contract.encoding.csproj" />
+    <ProjectReference Include="..\nft.contract.encoding\nft.contract.csproj" />
   </ItemGroup>
 
 </Project>
