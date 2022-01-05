@@ -361,3 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/nft.ui/Properties/ServiceDependencies/chesternft - Web Deploy/profile.arm.json

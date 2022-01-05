@@ -21,7 +21,7 @@ namespace nft.contract
             }
             else
             {
-                var projectId = config.GetSection("ProjectId").Value;
+                var projectId = config.GetSection("Web3:ProjectId").Value;
                 services.AddSingleton<IWeb3>(f => new Web3($"https://{network}.infura.io/v3/{projectId}"));
             }
             

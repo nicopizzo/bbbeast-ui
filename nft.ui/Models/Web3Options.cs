@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace nft.ui.Models
+﻿namespace nft.ui.Models
 {
     public class Web3Options
     {
