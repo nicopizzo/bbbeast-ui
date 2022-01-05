@@ -35,7 +35,7 @@
             </div>
             <div class="row">
                 <input type="number" @bind=mintCount />
-                <button @onclick="Mint">Mint</button>
+                <button @onclick="Mint" disabled=@(accountMinted == _web3Options.MaxMintCount)>Mint</button>
             </div>
         }
     </div>
@@ -69,7 +69,7 @@
     {
         try
         {
-            BigInteger weiValue = BigInteger.Multiply(_web3Options.MintCost, mintCount);
+            BigInteger weiValue = BigInteger.Multiply(BigInteger.Parse(_web3Options.MintCost), mintCount);
             string data = _nftEncoding.GetMintFunctionEncoding(mintCount);
 
             var result = await _metaMaskService.SendTransaction(_web3Options.ContractAddress, weiValue, data[2..]);

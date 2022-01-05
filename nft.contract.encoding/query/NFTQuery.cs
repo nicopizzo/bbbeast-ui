@@ -1,14 +1,6 @@
 ﻿using Nethereum.Contracts.ContractHandlers;
-using Nethereum.JsonRpc.Client;
 using Nethereum.Web3;
 using nft.contract.query.Queries;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace nft.contract.query
 {
     public class NFTQuery : INFTQuery
@@ -22,25 +14,13 @@ namespace nft.contract.query
 
         public async Task<int> GetNFTCount(string address)
         {
-            try
+            var balanceOfFunction = new BalanceOfQuery()
             {
-                IClient clinet = new RpcClient(new Uri("HTTP://127.0.0.1:7545"));
+                Owner = address
+            };
 
-                Web3 d = new Web3(clinet);
-                var h = d.Eth.GetContractHandler("0xe46dab9FA9ecb10da980c7BE8138a26013153eF3");
-
-                var balanceOfFunction = new BalanceOfQuery()
-                {
-                    Owner = address
-                };
-
-                var result = await _ContractHandler.QueryAsync<BalanceOfQuery, int>(balanceOfFunction);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                return 0;
-            }
+            var result = await _ContractHandler.QueryAsync<BalanceOfQuery, int>(balanceOfFunction);
+            return result;
         }
     }
 }

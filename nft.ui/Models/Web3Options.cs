@@ -8,6 +8,6 @@ namespace nft.ui.Models
         public long ChainId { get; set; }
         public string ContractAddress { get; set; }
         public int MaxMintCount { get; set; }
-        public BigInteger MintCost { get; set; }
+        public string MintCost { get; set; }
     }
 }
