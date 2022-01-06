@@ -10,9 +10,13 @@
 @inject MetaMaskService _metaMaskService
 @inject Web3Options _web3Options
 
-<PageTitle>NFT</PageTitle>
+<PageTitle>BBBeast</PageTitle>
 
 <div class="container">
+    <div class="row">
+        <p>BB Beast Minting Page</p>
+        <p>Contract Address: <a href="https://rinkeby.etherscan.io/address/@_web3Options.ContractAddress" target="_blank">@_web3Options.ContractAddress</a></p>
+    </div>
     <div class="row">
        @if (!hasMetaMask)
        {
