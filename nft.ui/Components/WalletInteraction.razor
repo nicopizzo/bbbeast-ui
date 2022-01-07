@@ -1,0 +1,32 @@
+﻿<div class="container">
+    <div class="row">
+       @if (!hasMetaMask)
+       {
+            <p>No MetaMask detected. Please install <a href="https://metamask.io" target="_blank">MetaMask</a>.</p>
+        }
+        else if (string.IsNullOrEmpty(selectedAddress))
+        {
+            <button @onclick="ConnectWallet">Connect Wallet</button>
+        }
+        else if(_web3Options.ChainId != chainId)
+        {
+            <p>Wrong network selected. Please change to @_web3Options.Network</p>
+        }
+        else
+        {
+            <div class="row">
+                <p>Create minting transaction below</p>
+                <p>Selected Address: @selectedAddress</p>
+                <p>Minted: @accountMinted / @_web3Options.MaxMintCount</p>
+            </div>
+            <div class="row">
+                <EditForm Model="@mintModel" OnValidSubmit="@Mint">
+                    <DataAnnotationsValidator />
+
+                    <InputNumber @bind-Value="mintModel.MintCount" min="1" max="@_web3Options.MaxMintCount" step="1" />
+                    <button type="submit" disabled=@(accountMinted == _web3Options.MaxMintCount)>Mint</button>
+                </EditForm>            
+            </div>
+        }
+    </div>
+</div>
