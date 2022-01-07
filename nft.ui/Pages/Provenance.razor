@@ -1,3 +1,19 @@
 ﻿@page "/provenance"
 
-<h3>Provenance</h3>
+<div class="p-5 mb-4 bg-light border rounded-3">
+    <h1>Provenance Hash</h1>
+    <p class="lead">One of the concerns with NFTs are how the images are stored and ensuring that the creators did/can not alter the content in any way. 
+        By utilizing a provenance hash and IPFS we are providing visibility on both the integrity of the content as well as fairness of the minting process. 
+        To understand how we are able to verify the integrity, we must first understand IPFS. </p>
+    <p class="lead">IPFS is a decentralized storage mechanisim. Any time a file is uploaded, the contents are hashed and used as an identitier to access the content at a later time. 
+        If someone were to manipulate the content and reupload it, the hash would change making creating a new identifier.
+        This is important because the all of the images and metadata, for each of the images, are uploaded and each have an identifier.
+        When you request your token URI from a NFT contract, what is provided is the IPFS link to the metadata. Within the metadata is another IPFS link to the actual image.
+    </p>   
+    <p class="lead">Once we have all of the images and metadata uploaded to IPFS, go through each metadata in order and hash using Sha256 its contents. 
+        We take the string value of each hash and put it together into one big string. We take that big string and hash that again. 
+        That hash is called the provenance hash. It is stored with the contract upon creation and is unable to be changed.
+        What this provides is a way for the communitity to check the creators to make sure not only did the content not change but the order of the images did not change by following the same exact steps we did.
+        The hash for every NFT, the large combined string and the provenance hash can all be found below. The provenance hash in the contract can be viewd in the contract as well.
+    </p>
+</div>
