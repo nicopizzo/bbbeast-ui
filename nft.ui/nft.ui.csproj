@@ -9,7 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
+    <None Include="compilerconfig.json" />
   </ItemGroup>
 
   <ItemGroup>

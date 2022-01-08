@@ -1,30 +1,19 @@
 ﻿@page "/"
 
-<div class="p-5 mb-4 bg-light border rounded-3">
-    <h1>Project Page</h1>
-    <p class="lead">To add some information about the project</p>
-    <p class="lead">To add info on the roadmap</p>
+<div class="container">
+    <div class="row align-items-start">
+        <div class="col-4 align-middle">
+            <h1>BB Beasts</h1>
+            <p>BB Beast is 10,000 randomly generated beasts all with unique attributes with different rarities.</p>
+        </div>
+        <div class="col-8">
+            <BeastCarousel />
+        </div>
+    </div>
+    <div class="row">
+        <p>Visit us on <a href="https://testnets.opensea.io/collection/bbbeast">OpenSea</a>!</p>
+    </div>
+    <div class="row">
+        <p>This is what our roadmap looks like</p>
+    </div>
 </div>
-
-<div id="sampleImages" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="assets/c-1.png" class="d-block w-50" alt="..."/>
-    </div>
-    <div class="carousel-item">
-      <img src="assets/c-2.png" class="d-block w-50" alt="..."/>
-    </div>
-    <div class="carousel-item">
-      <img src="assets/c-3.png" class="d-block w-50" alt="..."/>
-    </div>
-  </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#sampleImages" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#sampleImages" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
-

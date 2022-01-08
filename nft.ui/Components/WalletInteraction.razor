@@ -1,21 +1,21 @@
 ﻿
 @if (!hasMetaMask)
 {
-    <p class="lead">No MetaMask detected. Please install <a href="https://metamask.io" target="_blank">MetaMask</a>.</p>
+    <p>No MetaMask detected. Please install <a href="https://metamask.io" target="_blank">MetaMask</a>.</p>
 }
 else if (string.IsNullOrEmpty(selectedAddress))
 {
-    <p class="lead"><button class="btn btn-primary" @onclick="ConnectWallet">Connect Wallet</button></p>
+    <button class="btn btn-primary" @onclick="ConnectWallet">Connect Wallet</button>
 }
 else if (_web3Options.ChainId != chainId)
 {
-    <p class="lead">Wrong network selected. Please change to @_web3Options.Network</p>
+    <p>Wrong network selected. Please change to @_web3Options.Network</p>
 }
 else
 {
-    <p class="lead">Create minting transaction below</p>
-    <p class="lead">Selected Address: @selectedAddress</p>
-    <p class="lead">Minted: @accountMinted / @_web3Options.MaxMintCount</p>
+    <p>Create minting transaction below</p>
+    <p>Selected Address: @selectedAddress</p>
+    <p>Minted: @accountMinted / @_web3Options.MaxMintCount</p>
     <EditForm Model="@mintModel" OnValidSubmit="@Mint">
         <DataAnnotationsValidator />
 

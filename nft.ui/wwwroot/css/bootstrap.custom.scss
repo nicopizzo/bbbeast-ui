@@ -1,0 +1,38 @@
+﻿@import "../lib/bootstrap/scss/bootstrap";
+
+$primaryColor: #5ff739;
+$textColor: $white;
+$hoverColor: #0a58ca;
+
+nav.navbar {
+    background-color: $primaryColor;
+}
+
+a {
+    color: $textColor !important;
+}
+
+a:hover {
+    color: $hoverColor !important;
+}
+
+.btn-primary {
+    background-color: $primaryColor;
+    color: $textColor;
+}
+
+.btn-primary:hover {
+    background-color: $hoverColor;
+    color: $textColor;
+}
+
+#sampleImages img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+}
+
+body {
+    background: $black;
+    color: $textColor;
+}
