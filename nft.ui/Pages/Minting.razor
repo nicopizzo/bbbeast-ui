@@ -1,8 +1,11 @@
 ﻿@page "/mint"
 
 @inject Web3Options _web3Options
+<div class="container">
+    <div class="row align-items-start">
+        <h1>BB Beast Minting</h1>
+        <p>Contract Address: <a href="https://rinkeby.etherscan.io/address/@_web3Options.ContractAddress" target="_blank">@_web3Options.ContractAddress</a></p>
 
-<h1>BB Beast Minting</h1>
-<p>Contract Address: <a href="https://rinkeby.etherscan.io/address/@_web3Options.ContractAddress" target="_blank">@_web3Options.ContractAddress</a></p>
-
-<WalletInteraction />
+        <WalletInteraction />
+    </div>
+</div>
