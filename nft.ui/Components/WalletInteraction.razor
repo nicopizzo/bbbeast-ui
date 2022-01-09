@@ -16,15 +16,20 @@ else
     <p>Create minting transaction below</p>
     <p>Selected Address: @selectedAddress</p>
     <p>Minted: @accountMinted / @_web3Options.MaxMintCount</p>
-    <EditForm Model="@mintModel" OnValidSubmit="@Mint">
-        <DataAnnotationsValidator />
 
-        <div class="form-group">
-            <label class="form-label input-sm">Amount to Mint</label>
-            <span class="input-group-btn" style="width:0px;"></span>
-            <InputNumber class="form-control input-sm" @bind-Value="mintModel.MintCount" min="1" max="@(_web3Options.MaxMintCount - accountMinted)" step="1" />
-            <span class="input-group-btn" style="width:0px;"></span>
-            <button class="form-control input-sm btn btn-primary" type="submit" disabled=@(accountMinted == _web3Options.MaxMintCount)>Mint</button>
+    <div class="container">
+        <div class="row">
+            <label>Amount to Mint</label>
         </div>
-    </EditForm>
+        <div class="row">
+            <div class="col-5">
+                <div class="input-group">
+                    <input type="number" class="form-control" @bind="mintCount" @bind:event="oninput" min="0" max="@mintLeft" step="1" />
+                     <div class="input-group-append">                    
+                        <button class="btn btn-primary" type="button" @onclick="Mint" disabled=@(accountMinted == _web3Options.MaxMintCount)>Mint</button>
+                    </div>   
+                </div>          
+            </div>
+        </div>
+    </div>
 }

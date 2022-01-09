@@ -31,7 +31,14 @@ namespace nft.ui.Components
         private string selectedAddress;
         private long chainId = -1;
         private int accountMinted = 0;
-        private MintModel mintModel = new();
+        private int mintCount = 0;
+        private int mintLeft
+        {
+            get
+            {
+                return _web3Options.MaxMintCount - accountMinted;
+            }
+        }
 
         protected async override Task OnInitializedAsync()
         {
@@ -53,8 +60,14 @@ namespace nft.ui.Components
         {
             try
             {
-                BigInteger weiValue = BigInteger.Multiply(BigInteger.Parse(_web3Options.MintCost), mintModel.MintCount);
-                string data = _nftEncoding.GetMintFunctionEncoding(mintModel.MintCount);
+                if (!ValidateMint())
+                {
+                    _toastService.ShowError("Invalid mint amount");
+                    return;
+                }
+
+                BigInteger weiValue = BigInteger.Multiply(BigInteger.Parse(_web3Options.MintCost), mintCount);
+                string data = _nftEncoding.GetMintFunctionEncoding(mintCount);
 
                 var result = await _metaMaskService.SendTransaction(_web3Options.ContractAddress, weiValue, data[2..]);
                 _toastService.ShowSuccess($"Transaction sent: {result}");
@@ -108,6 +121,19 @@ namespace nft.ui.Components
             _toastService.ShowWarning("Chain Changed");
             await GetSelectedNetwork();
             StateHasChanged();
+        }
+
+        private bool ValidateMint()
+        {
+            if(mintCount <= 0 || 
+                mintCount > _web3Options.MaxMintCount ||
+                mintCount > mintLeft ||
+                accountMinted >= _web3Options.MaxMintCount)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
