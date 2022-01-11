@@ -29,4 +29,8 @@
     <ProjectReference Include="..\nft.contract.encoding\nft.contract.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
+
 </Project>
