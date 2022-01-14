@@ -11,6 +11,7 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 var web3Options = new Web3Options();
+builder.Configuration.AddEnvironmentVariables();
 builder.Configuration.Bind("Web3", web3Options);
 builder.Services.AddSingleton(web3Options);
 
