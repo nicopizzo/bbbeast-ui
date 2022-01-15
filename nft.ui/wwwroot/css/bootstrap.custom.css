@@ -11119,11 +11119,11 @@ textarea.form-control-lg {
   }
 }
 nav.navbar {
-  background-color: #5ff739;
+  background-color: #ec5e34;
 }
 
 a {
-  color: #fff !important;
+  color: #000 !important;
 }
 
 a:hover {
@@ -11131,13 +11131,13 @@ a:hover {
 }
 
 .btn-primary {
-  background-color: #5ff739;
-  color: #fff;
+  background-color: #ec5e34;
+  color: #000;
 }
 
 .btn-primary:hover {
   background-color: #0a58ca;
-  color: #fff;
+  color: #000;
 }
 
 #sampleImages img {
@@ -11146,6 +11146,7 @@ a:hover {
 }
 
 body {
-  background: #000;
-  color: #fff;
+  background: #fff;
+  color: #000;
+  font-family: "Montserrat", sans-serif;
 }

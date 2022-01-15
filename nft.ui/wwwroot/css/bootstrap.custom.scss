@@ -1,7 +1,7 @@
 ﻿@import "../lib/bootstrap/scss/bootstrap";
 
-$primaryColor: #5ff739;
-$textColor: $white;
+$primaryColor: #ec5e34;
+$textColor: $black;
 $hoverColor: #0a58ca;
 
 nav.navbar {
@@ -33,6 +33,7 @@ a:hover {
 }
 
 body {
-    background: $black;
+    background: $white;
     color: $textColor;
+    font-family: 'Montserrat', sans-serif;
 }
