@@ -9,6 +9,13 @@
         "js/bootstrap.bundle.min.js.map",
         "js/bootstrap.bundle.min.js"
       ]
+    },
+    {
+      "library": "jquery@3.6.0",
+      "destination": "wwwroot/lib/jquery/",
+      "files": [
+        "jquery.min.js"
+      ]
     }
   ]
 }

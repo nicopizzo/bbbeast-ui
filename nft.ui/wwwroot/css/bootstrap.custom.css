@@ -11122,6 +11122,10 @@ nav.navbar {
   background-color: #ec5e34;
 }
 
+.nav-link, .loading-message {
+  font-weight: 700;
+}
+
 a {
   color: #000 !important;
 }
@@ -11149,4 +11153,6 @@ body {
   background: #fff;
   color: #000;
   font-family: "Montserrat", sans-serif;
+  font-style: italic;
+  font-weight: 400;
 }

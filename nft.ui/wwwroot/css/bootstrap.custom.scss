@@ -8,6 +8,10 @@ nav.navbar {
     background-color: $primaryColor;
 }
 
+.nav-link, .loading-message {
+    font-weight: 700;
+}
+
 a {
     color: $textColor !important;
 }
@@ -36,4 +40,6 @@ body {
     background: $white;
     color: $textColor;
     font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-weight: 400;
 }
