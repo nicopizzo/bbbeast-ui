@@ -9,9 +9,9 @@ using System.Numerics;
 using Havit.Blazor.Components.Web;
 using Havit.Blazor.Components.Web.Bootstrap;
 
-namespace BBBeastUI.Components
+namespace BBBeastUI.Pages.Minting.Components
 {
-    public partial class WalletInteraction : ComponentBase
+    public partial class WalletInteraction : ComponentBase, IDisposable
     {
         [Inject] 
         protected IHxMessengerService _messenger { get; set; }
@@ -153,6 +153,12 @@ namespace BBBeastUI.Components
                     break;
             }
             return new MessengerMessage() { AutohideDelay = 1500, Title = message, Icon = icon };
+        }
+
+        public void Dispose()
+        {
+            MetaMaskService.AccountChangedEvent -= AccountChanged;
+            MetaMaskService.ChainChangedEvent -= ChainChanged;
         }
     }
 }

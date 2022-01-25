@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /nft.ui/Properties/ServiceDependencies/chesternft - Web Deploy/profile.arm.json
 /nft.ui/Properties/ServiceDependencies/bbbeast - Web Deploy/profile.arm.json
+/BBBeastUI/Properties/ServiceDependencies/bbbeast - Web Deploy/profile.arm.json
