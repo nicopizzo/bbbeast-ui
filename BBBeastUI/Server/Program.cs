@@ -7,7 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddRazorPages();
 var web3Options = new Web3Options();
 builder.Configuration.Bind("Web3", web3Options);
 builder.Services.AddSingleton(web3Options);
@@ -35,7 +34,6 @@ app.UseStaticFiles();
 app.UseRouting();
 
 
-app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
