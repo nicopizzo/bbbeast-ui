@@ -2,12 +2,12 @@
 using MetaMask.Blazor.Enums;
 using MetaMask.Blazor.Exceptions;
 using Microsoft.AspNetCore.Components;
-using nft.contract.encoding;
-using nft.contract.query;
 using BBBeastUI.Models;
 using System.Numerics;
 using Havit.Blazor.Components.Web;
 using Havit.Blazor.Components.Web.Bootstrap;
+using System.Net.Http.Json;
+using NFT.Contract.Models;
 
 namespace BBBeastUI.Pages.Minting.Components
 {
@@ -17,10 +17,7 @@ namespace BBBeastUI.Pages.Minting.Components
         protected IHxMessengerService _messenger { get; set; }
 
         [Inject]
-        protected INFTEncoding _nftEncoding { get; set; }
-
-        [Inject]
-        protected INFTQuery _nftQuery { get; set; }
+        protected HttpClient _httpClient { get; set; }
 
         [Inject]
         protected MetaMaskService _metaMaskService { get; set; }
@@ -68,7 +65,8 @@ namespace BBBeastUI.Pages.Minting.Components
                 }
 
                 BigInteger weiValue = BigInteger.Multiply(BigInteger.Parse(_web3Options.MintCost), mintCount);
-                string data = _nftEncoding.GetMintFunctionEncoding(mintCount);
+                var encodingResult = await _httpClient.GetFromJsonAsync<EncodingResult>($"/api/nft/encode/public/{mintCount}");
+                var data = encodingResult.Result;
 
                 var result = await _metaMaskService.SendTransaction(_web3Options.ContractAddress, weiValue, data[2..]);
                 _messenger.AddMessage(CreateMessage($"Transaction sent: {result}", "Success"));
@@ -94,7 +92,8 @@ namespace BBBeastUI.Pages.Minting.Components
         private async Task GetSelectedAddress()
         {
             selectedAddress = await _metaMaskService.GetSelectedAddress();
-            accountMinted = await _nftQuery.GetNFTCount(selectedAddress);
+            var result = await _httpClient.GetFromJsonAsync<QueryResult>($"/api/nft/query/{selectedAddress}");
+            accountMinted = result.Count;
         }
 
         private async Task GetSelectedNetwork()

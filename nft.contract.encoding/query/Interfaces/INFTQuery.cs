@@ -1,9 +1,9 @@
-﻿using System.Numerics;
+﻿using NFT.Contract.Models;
 
-namespace nft.contract.query
+namespace NFT.Contract.Query
 {
     public interface INFTQuery
     {
-        Task<int> GetNFTCount(string address);
+        Task<QueryResult> GetNFTCount(string address);
     }
 }

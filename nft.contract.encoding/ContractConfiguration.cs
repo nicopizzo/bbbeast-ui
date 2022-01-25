@@ -2,10 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Nethereum.JsonRpc.Client;
 using Nethereum.Web3;
-using nft.contract.encoding;
-using nft.contract.query;
+using NFT.Contract.Encoding;
+using NFT.Contract.Query;
 
-namespace nft.contract
+namespace NFT.Contract
 {
     public static class ContractConfiguration
     {

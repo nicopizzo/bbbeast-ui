@@ -1,7 +1,9 @@
 ﻿using Nethereum.Contracts.ContractHandlers;
 using Nethereum.Web3;
-using nft.contract.query.Queries;
-namespace nft.contract.query
+using NFT.Contract.Models;
+using NFT.Contract.Query.Queries;
+
+namespace NFT.Contract.Query
 {
     public class NFTQuery : INFTQuery
     {
@@ -12,7 +14,7 @@ namespace nft.contract.query
             _ContractHandler = web3.Eth.GetContractHandler(contractAddress);
         }
 
-        public async Task<int> GetNFTCount(string address)
+        public async Task<QueryResult> GetNFTCount(string address)
         {
             var balanceOfFunction = new BalanceOfQuery()
             {
@@ -20,7 +22,7 @@ namespace nft.contract.query
             };
 
             var result = await _ContractHandler.QueryAsync<BalanceOfQuery, int>(balanceOfFunction);
-            return result;
+            return new QueryResult() { Count = result };
         }
     }
 }

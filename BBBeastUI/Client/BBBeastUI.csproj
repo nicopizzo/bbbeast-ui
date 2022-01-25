@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>9f916de2-1bd2-40aa-a441-c38244eb7dda</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\nft.contract.encoding\nft.contract.csproj" />
+    <ProjectReference Include="..\Shared\NFT.Contract.Models.csproj" />
   </ItemGroup>
 
 </Project>

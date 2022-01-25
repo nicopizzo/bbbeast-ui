@@ -1,6 +1,6 @@
 ﻿using Nethereum.ABI.FunctionEncoding.Attributes;
 
-namespace nft.contract.encoding.Parameters
+namespace NFT.Contract.Encoding.Parameters
 {
     public class MintParameters : ParameterBase
     {

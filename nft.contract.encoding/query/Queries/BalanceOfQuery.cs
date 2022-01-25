@@ -1,7 +1,7 @@
 ﻿using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
 
-namespace nft.contract.query.Queries
+namespace NFT.Contract.Query.Queries
 {
     [Function("balanceOf", "uint256")]
     internal class BalanceOfQuery : FunctionMessage

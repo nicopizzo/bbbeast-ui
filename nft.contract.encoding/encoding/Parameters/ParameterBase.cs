@@ -1,7 +1,7 @@
 ﻿using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.ABI.Model;
 
-namespace nft.contract.encoding.Parameters
+namespace NFT.Contract.Encoding.Parameters
 {
     public abstract class ParameterBase
     {

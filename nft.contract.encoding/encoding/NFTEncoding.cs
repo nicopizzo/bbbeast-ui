@@ -1,31 +1,32 @@
 ﻿using Nethereum.ABI.FunctionEncoding;
 using Nethereum.ABI.Model;
-using nft.contract.encoding.Parameters;
+using NFT.Contract.Encoding.Parameters;
+using NFT.Contract.Models;
 
-namespace nft.contract.encoding
+namespace NFT.Contract.Encoding
 {
     public class NFTEncoding : INFTEncoding
     {
-        public string GetMintFunctionEncoding(int mintCount)
+        public EncodingResult GetMintFunctionEncoding(int mintCount)
         {
             FunctionABI function = new FunctionABI("mint", false);
             return CreateMintEncoding(function, mintCount);
         }
 
-        public string GetPrivateSaleMintFunctionEncoding(int mintCount)
+        public EncodingResult GetPrivateSaleMintFunctionEncoding(int mintCount)
         {
             FunctionABI function = new FunctionABI("privateSaleMint", false);
             return CreateMintEncoding(function, mintCount);
         }
 
-        private string CreateMintEncoding(FunctionABI function, int mintCount)
+        private EncodingResult CreateMintEncoding(FunctionABI function, int mintCount)
         {
             var parameters = new MintParameters() { MintCount = mintCount };
             function.InputParameters = parameters.GetParameters();
 
             var functionCallEncoder = new FunctionCallEncoder();
             var data = functionCallEncoder.EncodeRequest(function.Sha3Signature, function.InputParameters, parameters.GetParameterValues());
-            return data;
+            return new EncodingResult() { Result = data };
         }
     }
 }

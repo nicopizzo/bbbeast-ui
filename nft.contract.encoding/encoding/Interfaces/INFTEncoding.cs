@@ -1,8 +1,10 @@
-﻿namespace nft.contract.encoding
+﻿using NFT.Contract.Models;
+
+namespace NFT.Contract.Encoding
 {
     public interface INFTEncoding
     {
-        string GetMintFunctionEncoding(int mintCount);
-        string GetPrivateSaleMintFunctionEncoding(int mintCount);
+        EncodingResult GetMintFunctionEncoding(int mintCount);
+        EncodingResult GetPrivateSaleMintFunctionEncoding(int mintCount);
     }
 }

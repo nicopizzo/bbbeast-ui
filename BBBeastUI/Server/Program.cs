@@ -1,11 +1,17 @@
+using BBBeast.UI.Server.Models;
 using Microsoft.AspNetCore.ResponseCompression;
+using NFT.Contract;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
 builder.Services.AddRazorPages();
+var web3Options = new Web3Options();
+builder.Configuration.Bind("Web3", web3Options);
+builder.Services.AddSingleton(web3Options);
+builder.Services.AddNFTContractInteraction(builder.Configuration);
 
 var app = builder.Build();
 

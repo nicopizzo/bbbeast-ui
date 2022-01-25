@@ -12,12 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Client\BBBeastUI.csproj" />
-    <ProjectReference Include="..\Shared\BBBeast.UI.Shared.csproj" />
-	 <ProjectReference Include="..\..\nft.contract.encoding\nft.contract.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
+	 <ProjectReference Include="..\..\nft.contract.encoding\NFT.Contract.csproj" />
   </ItemGroup>
 
 
