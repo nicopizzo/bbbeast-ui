@@ -2,14 +2,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using Nethereum.JsonRpc.Client;
 using Nethereum.Web3;
-using NFT.Contract.Encoding;
-using NFT.Contract.Query;
 
-namespace NFT.Contract
+namespace NFT.Contract.Query
 {
     public static class ContractConfiguration
     {
-        public static IServiceCollection AddNFTContractInteraction(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddNFTContractQuery(this IServiceCollection services, IConfiguration config)
         {
             var network = config.GetSection("Web3:Network").Value;
             var contractAddress = config.GetSection("Web3:ContractAddress").Value;
@@ -25,7 +23,6 @@ namespace NFT.Contract
                 services.AddSingleton<IWeb3>(f => new Web3($"https://{network}.infura.io/v3/{projectId}"));
             }
             
-            services.AddSingleton<INFTEncoding, NFTEncoding>();
             services.AddSingleton<INFTQuery, NFTQuery>(f => new NFTQuery(f.GetRequiredService<IWeb3>(), contractAddress));
             return services;
         }

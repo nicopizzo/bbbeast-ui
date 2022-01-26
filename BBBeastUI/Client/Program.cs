@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Havit.Blazor.Components.Web;
 using BBBeastUI.Models;
 using MetaMask.Blazor;
+using NFT.Contract.Encoding;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -13,6 +14,7 @@ var web3Options = new Web3Options();
 builder.Configuration.Bind("Web3", web3Options);
 builder.Services.AddSingleton(web3Options);
 
+builder.Services.AddNFTContractEncoding();
 builder.Services.AddMetaMaskBlazor();
 builder.Services.AddHxServices();
 builder.Services.AddHxMessenger();

@@ -1,6 +1,5 @@
 ﻿using Nethereum.Contracts.ContractHandlers;
 using Nethereum.Web3;
-using NFT.Contract.Models;
 using NFT.Contract.Query.Queries;
 
 namespace NFT.Contract.Query

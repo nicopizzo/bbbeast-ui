@@ -1,6 +1,4 @@
-﻿using NFT.Contract.Models;
-
-namespace NFT.Contract.Query
+﻿namespace NFT.Contract.Query
 {
     public interface INFTQuery
     {

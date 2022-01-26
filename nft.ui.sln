@@ -8,13 +8,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFT.Contract", "nft.contract.encoding\NFT.Contract.csproj", "{62D925A5-EBD8-46EA-8D3F-E22992532FC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFT.Contract.Query", "NFT.Contract\Query\NFT.Contract.Query.csproj", "{62D925A5-EBD8-46EA-8D3F-E22992532FC3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BBBeast.UI.Server", "BBBeastUI\Server\BBBeast.UI.Server.csproj", "{CC996B08-1971-4357-B3B0-911032E370C9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BBBeastUI", "BBBeastUI\Client\BBBeastUI.csproj", "{3DFB647D-8E79-4F2D-A9E7-FE09062AEA9D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFT.Contract.Models", "BBBeastUI\Shared\NFT.Contract.Models.csproj", "{0129D01B-99E5-4BD6-8057-FF04C3BC73F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFT.Contract.Encoding", "NFT.Contract\Encoding\NFT.Contract.Encoding.csproj", "{0129D01B-99E5-4BD6-8057-FF04C3BC73F6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFT.Contract.Query.Models", "NFT.Contract\Query.Models\NFT.Contract.Query.Models.csproj", "{21A5D48D-9912-4FFE-9B5C-DCB293D53B8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{0129D01B-99E5-4BD6-8057-FF04C3BC73F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0129D01B-99E5-4BD6-8057-FF04C3BC73F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0129D01B-99E5-4BD6-8057-FF04C3BC73F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21A5D48D-9912-4FFE-9B5C-DCB293D53B8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21A5D48D-9912-4FFE-9B5C-DCB293D53B8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21A5D48D-9912-4FFE-9B5C-DCB293D53B8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21A5D48D-9912-4FFE-9B5C-DCB293D53B8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

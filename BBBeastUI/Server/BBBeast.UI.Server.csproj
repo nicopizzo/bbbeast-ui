@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\NFT.Contract\Query\NFT.Contract.Query.csproj" />
     <ProjectReference Include="..\Client\BBBeastUI.csproj" />
-	 <ProjectReference Include="..\..\nft.contract.encoding\NFT.Contract.csproj" />
   </ItemGroup>
 
 

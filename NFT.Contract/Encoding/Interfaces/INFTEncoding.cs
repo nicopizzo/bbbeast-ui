@@ -1,6 +1,4 @@
-﻿using NFT.Contract.Models;
-
-namespace NFT.Contract.Encoding
+﻿namespace NFT.Contract.Encoding
 {
     public interface INFTEncoding
     {

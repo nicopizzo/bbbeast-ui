@@ -1,7 +1,6 @@
 ﻿using Nethereum.ABI.FunctionEncoding;
 using Nethereum.ABI.Model;
 using NFT.Contract.Encoding.Parameters;
-using NFT.Contract.Models;
 
 namespace NFT.Contract.Encoding
 {

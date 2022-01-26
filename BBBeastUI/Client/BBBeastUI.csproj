@@ -19,7 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\NFT.Contract.Models.csproj" />
+    <ProjectReference Include="..\..\NFT.Contract\Encoding\NFT.Contract.Encoding.csproj" />
+    <ProjectReference Include="..\..\NFT.Contract\Query.Models\NFT.Contract.Query.Models.csproj" />
   </ItemGroup>
 
 </Project>
