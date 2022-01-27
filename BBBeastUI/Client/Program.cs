@@ -14,6 +14,10 @@ var web3Options = new Web3Options();
 builder.Configuration.Bind("Web3", web3Options);
 builder.Services.AddSingleton(web3Options);
 
+var state = new ProjectState();
+builder.Configuration.Bind("ProjectState", state);
+builder.Services.AddSingleton(state);
+
 builder.Services.AddNFTContractEncoding();
 builder.Services.AddMetaMaskBlazor();
 builder.Services.AddHxServices();

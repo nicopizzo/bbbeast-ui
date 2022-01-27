@@ -2,5 +2,9 @@
   {
     "outputFile": "wwwroot/css/bootstrap.custom.css",
     "inputFile": "wwwroot/css/bootstrap.custom.scss"
+  },
+  {
+    "outputFile": "Pages/Index/Components/Timeline.razor.css",
+    "inputFile": "Pages/Index/Components/Timeline.razor.scss"
   }
 ]

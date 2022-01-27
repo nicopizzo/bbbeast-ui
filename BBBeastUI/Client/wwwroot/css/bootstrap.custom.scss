@@ -1,14 +1,12 @@
-﻿@import "../lib/bootstrap/scss/bootstrap";
-
-$primaryColor: #ec5e34;
-$textColor: $white;
-$hoverColor: #0a58ca;
+﻿@import "global.scss";
+@import "../lib/bootstrap/scss/bootstrap";
 
 nav.navbar {
     background-color: $primaryColor;
 }
 
 .nav-link, .loading-message {
+    font-family: 'Montserrat', sans-serif;
     font-weight: 700;
 }
 
@@ -30,16 +28,15 @@ a:hover {
     color: $textColor;
 }
 
-.carousel img {
-    width: 50%;
-    height: auto;
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
 }
 
 body {
     background: $black;
     color: $textColor;
     font-family: 'Montserrat', sans-serif;
-    font-style: italic;
     font-weight: 400;
 }
 

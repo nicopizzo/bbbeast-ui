@@ -1,17 +1,19 @@
-﻿<HxNavbar Color=ThemeColor.None ColorScheme=NavbarColorScheme.None CssClass="sticky-top">
+﻿<HxNavbar Color=ThemeColor.None ColorScheme=NavbarColorScheme.None>
 	<HxNavbarBrand CssClass="px-3">
-		<img src="/assets/BBBeast_Logo_Icon.png" width="40" height="40" alt="">
+		<img src="/assets/BBBeast_Wordmark.svg" width="200" height="45" alt="">
 	</HxNavbarBrand>
 	<HxNavbarToggler CssClass="mx-2">
 		<i class="fas fa-bars" style="color:#000; font-size:28px;"></i>
 	</HxNavbarToggler>
-	<HxNavbarCollapse>
-		<HxNav Id="beast-nav" CssClass="mr-auto">
-			<HxNavLink Href="/" CssClass="px-3">Home</HxNavLink>
-			<HxNavLink Href="/#roadmap" CssClass="px-3">Roadmap</HxNavLink>
-            <HxNavLink Href="/#team" CssClass="px-3">Team</HxNavLink>
-            <HxNavLink Href="/provenance" CssClass="px-3">Provenance Hash</HxNavLink>
-            <HxNavLink Href="/mint" CssClass="px-3">Mint</HxNavLink>
+	<HxNavbarCollapse CssClass="justify-content-end">
+		<HxNav Id="beast-nav" CssClass="me-5">
+			<HxNavLink Href="/" CssClass="px-4">Home</HxNavLink>
+			<HxNavLink Href="/#roadmap" CssClass="px-4">Roadmap</HxNavLink>
+            <HxNavLink Href="/#team" CssClass="px-4">Team</HxNavLink>
+            <HxNavLink Href="/provenance" CssClass="px-4">Provenance Hash</HxNavLink>
+            <HxNavLink Href="/mint" CssClass="px-4">Mint</HxNavLink>
+			<HxNavLink Href="https://twitter.com/" CssClass="px-4"><i class="fab fa-twitter"></i></HxNavLink>
+			<HxNavLink Href="https://discord.com/" CssClass="px-4"><i class="fab fa-discord"></i></HxNavLink>
 		</HxNav>
 	</HxNavbarCollapse>
 </HxNavbar>

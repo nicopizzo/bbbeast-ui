@@ -1,0 +1,12 @@
+﻿<a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button"><i class="fas fa-chevron-up"></i></a>
+
+@code {
+    [Inject]
+    protected IJSRuntime _JSRuntime { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        await _JSRuntime.InvokeVoidAsync("setupScrollToTop");
+    }
+}

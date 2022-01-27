@@ -1,11 +1,9 @@
 ﻿<HxCarousel Controls="true">
-    <HxCarouselItem Active="true">
-        <CarouselItem AssetFolder="assets/carousel1"/>
-    </HxCarouselItem>
-    <HxCarouselItem>
-        <CarouselItem AssetFolder="assets/carousel2"/>
-    </HxCarouselItem>
-    <HxCarouselItem>
-        <CarouselItem AssetFolder="assets/carousel3"/>
-    </HxCarouselItem>
+    @foreach(var i in Enumerable.Range(1, 8))
+    {
+        var image = $"/assets/carousel/{i}.png";
+        <HxCarouselItem Active=@(i == 1)>
+            <img src="@image" class="img-fluid d-inline-block" /> 
+        </HxCarouselItem>
+    }
 </HxCarousel>
