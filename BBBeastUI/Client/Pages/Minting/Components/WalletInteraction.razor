@@ -14,8 +14,20 @@ else
 {
     <p>Create minting transaction below</p>
     <p>Selected Address: @selectedAddress</p>
-    <p>Minted: @accountMinted / @_web3Options.MaxMintCount</p>
 
+    @if(accountMinted == null)
+    {
+        <p>Loading mint count</p>
+    }
+    else if(accountMinted == -1)
+    {
+        <p>Failed to load mint count</p>
+    }
+    else
+    {
+        <p>Minted: @accountMinted / @_web3Options.MaxMintCount</p>
+    }
+    
     <div class="container">
         <div class="row">
             <label>Amount to Mint</label>
@@ -23,9 +35,9 @@ else
         <div class="row">
             <div class="col-5">
                 <div class="input-group">
-                    <input type="number" class="form-control" @bind="mintCount" @bind:event="oninput" min="0" max="@mintLeft" step="1" />
+                    <input type="number" class="form-control" @bind="mintCount" @bind:event="oninput" min="0" max="@(mintLeft == -1 ? int.MaxValue : mintLeft)" step="1" />
                      <div class="input-group-append">                    
-                        <button class="btn btn-primary" type="button" @onclick="Mint" disabled=@(accountMinted == _web3Options.MaxMintCount)>Mint</button>
+                        <button class="btn btn-primary" type="button" @onclick="Mint" disabled=@(accountMinted == null || accountMinted == _web3Options.MaxMintCount)>Mint</button>
                     </div>   
                 </div>          
             </div>

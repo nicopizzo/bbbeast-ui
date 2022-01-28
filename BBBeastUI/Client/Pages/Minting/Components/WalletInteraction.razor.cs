@@ -6,9 +6,9 @@ using BBBeastUI.Models;
 using System.Numerics;
 using Havit.Blazor.Components.Web;
 using Havit.Blazor.Components.Web.Bootstrap;
-using System.Net.Http.Json;
 using NFT.Contract.Encoding;
 using NFT.Contract.Query;
+using System.Text.Json;
 
 namespace BBBeastUI.Pages.Minting.Components
 {
@@ -32,13 +32,14 @@ namespace BBBeastUI.Pages.Minting.Components
         private bool hasMetaMask;
         private string selectedAddress;
         private long chainId = -1;
-        private int accountMinted = 0;
+        private int? accountMinted = null;
         private int mintCount = 0;
         private int mintLeft
         {
             get
             {
-                return _web3Options.MaxMintCount - accountMinted;
+                if (accountMinted == null || accountMinted == -1) return -1;
+                return _web3Options.MaxMintCount - accountMinted.Value;
             }
         }
 
@@ -69,7 +70,7 @@ namespace BBBeastUI.Pages.Minting.Components
                 }
 
                 BigInteger weiValue = BigInteger.Multiply(BigInteger.Parse(_web3Options.MintCost), mintCount);
-                var encodingResult = _encoder.GetPrivateSaleMintFunctionEncoding(mintCount);
+                var encodingResult = _encoder.GetMintFunctionEncoding(mintCount);
                 var data = encodingResult.Result;
 
                 var result = await _metaMaskService.SendTransaction(_web3Options.ContractAddress, weiValue, data[2..]);
@@ -96,8 +97,23 @@ namespace BBBeastUI.Pages.Minting.Components
         private async Task GetSelectedAddress()
         {
             selectedAddress = await _metaMaskService.GetSelectedAddress();
-            var result = await _httpClient.GetFromJsonAsync<QueryResult>($"/api/nft/query/count/{selectedAddress}");
-            accountMinted = result.Count;
+            try
+            {
+                var result = await _httpClient.GetAsync($"/api/nft/query/count/{selectedAddress}");
+                if (result.IsSuccessStatusCode)
+                {
+                    accountMinted = JsonSerializer.Deserialize<QueryResult>(await result.Content.ReadAsStringAsync(), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })?.Count;
+                }
+                else
+                {
+                    accountMinted = -1;
+                }
+            }
+            catch
+            {
+                accountMinted = -1;
+            }
+            StateHasChanged();
         }
 
         private async Task GetSelectedNetwork()
@@ -131,8 +147,9 @@ namespace BBBeastUI.Pages.Minting.Components
         {
             if(mintCount <= 0 || 
                 mintCount > _web3Options.MaxMintCount ||
-                mintCount > mintLeft ||
-                accountMinted >= _web3Options.MaxMintCount)
+                (accountMinted != -1 && 
+                (mintCount > mintLeft ||
+                accountMinted >= _web3Options.MaxMintCount)))
             {
                 return false;
             }

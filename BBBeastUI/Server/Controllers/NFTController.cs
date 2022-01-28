@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BBBeastUI.Models;
+using Microsoft.AspNetCore.Mvc;
 using NFT.Contract.Query;
+using System.Reflection;
 
 namespace BBBeast.UI.Server.Controllers
 {
@@ -25,6 +27,22 @@ namespace BBBeast.UI.Server.Controllers
             {
                 return BadRequest(ex.Message);
             }           
+        }
+
+        [HttpGet("query/minted")]
+        public async Task<IActionResult> GetTotalMinted()
+        {
+            return Ok();
+        }
+
+        [HttpGet("hash")]
+        public async Task<IActionResult> GetProvHashInfo()
+        {
+            HashDto dto = new HashDto();
+            var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            dto.Hashes = await System.IO.File.ReadAllLinesAsync(Path.Combine(basePath, "Hashes", "Hashes.txt"));
+            dto.ProvHash = await System.IO.File.ReadAllTextAsync(Path.Combine(basePath, "Hashes", "ProvHash.txt"));
+            return Ok(dto);
         }
     }
 }
