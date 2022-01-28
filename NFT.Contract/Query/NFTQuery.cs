@@ -23,5 +23,13 @@ namespace NFT.Contract.Query
             var result = await _ContractHandler.QueryAsync<BalanceOfQuery, int>(balanceOfFunction);
             return new QueryResult() { Count = result };
         }
+
+        public async Task<QueryResult> GetTotalSupply()
+        {
+            var supplyFunction = new TotalSupplyQuery();
+
+            var result = await _ContractHandler.QueryAsync<TotalSupplyQuery, int>(supplyFunction);
+            return new QueryResult() { Count = result };
+        }
     }
 }

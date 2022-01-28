@@ -44,16 +44,16 @@
 
             <hr class="my-12"/>
 
-            <p class="fw-bold">Concatenated Hashes</p>
+            <p class="fw-bold">Concatenated Hashes:</p>
             <div class="row text-break overflow-auto" style="height: 150px">
                 <p>@_Concated</p>
             </div>
 
             <hr class="my-12"/>
 
-            <p class="fw-bold">Hashes by Id</p>
+            <p class="fw-bold">Hashes by Id:</p>
             <div class="row overflow-auto" style="height: 500px">
-                <HxGrid TItem="KeyValuePair<int, string>" TableContainerCssClass="table-responsive" DataProvider="GridDataProvider" PageSize="10">
+                <HxGrid TItem="KeyValuePair<int, string>" TableContainerCssClass="table-responsive" DataProvider="GridDataProvider" ContentNavigationMode="GridContentNavigationMode.InfiniteScroll">
 	                <Columns>
 		                <HxGridColumn TItem="KeyValuePair<int, string>" HeaderText="Id" ItemTextSelector="@(item => item.Key.ToString())" SortKeySelector="@(item => item.Key)" IsDefaultSortColumn="true" />
 		                <HxGridColumn TItem="KeyValuePair<int, string>" HeaderText="Hash" ItemTextSelector="@(item => item.Value)" SortKeySelector="@(item => item.Value)" />

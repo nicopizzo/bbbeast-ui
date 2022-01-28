@@ -39,6 +39,7 @@ namespace BBBeastUI.Pages
                 if (result.IsSuccessStatusCode)
                 {
                     _HashDto = JsonSerializer.Deserialize<HashDto>(await result.Content.ReadAsStringAsync(), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    _Loaded = true;
                 }
             }
             catch

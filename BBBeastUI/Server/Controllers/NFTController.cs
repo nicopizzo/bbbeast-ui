@@ -32,7 +32,7 @@ namespace BBBeast.UI.Server.Controllers
         [HttpGet("query/minted")]
         public async Task<IActionResult> GetTotalMinted()
         {
-            return Ok();
+            return Ok(await _NFTQuery.GetTotalSupply());
         }
 
         [HttpGet("hash")]
