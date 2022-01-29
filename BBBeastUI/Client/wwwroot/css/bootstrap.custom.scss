@@ -32,13 +32,18 @@ th, td, tr:hover {
     color: $textColor;
 }
 
+.card {
+    background: $backgroundColor;
+    border: 1px solid white;
+}
+
 h1 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 900;
 }
 
 body {
-    background: $black;
+    background: $backgroundColor;
     color: $textColor;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;

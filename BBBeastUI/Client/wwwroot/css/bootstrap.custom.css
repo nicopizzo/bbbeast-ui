@@ -11128,7 +11128,7 @@ nav.navbar, footer {
 }
 
 a {
-  color: #FFFFFF !important;
+  color: white !important;
 }
 
 a:hover {
@@ -11136,17 +11136,22 @@ a:hover {
 }
 
 th, td, tr:hover {
-  color: #FFFFFF !important;
+  color: white !important;
 }
 
 .btn-primary {
   background-color: #ec5e34;
-  color: #FFFFFF;
+  color: white;
 }
 
 .btn-primary:hover {
   background-color: #0a58ca;
-  color: #FFFFFF;
+  color: white;
+}
+
+.card {
+  background: black;
+  border: 1px solid white;
 }
 
 h1, .h1 {
@@ -11155,13 +11160,13 @@ h1, .h1 {
 }
 
 body {
-  background: #000;
-  color: #FFFFFF;
+  background: black;
+  color: white;
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
 }
 
 hr {
   height: 3px !important;
-  color: #FFFFFF;
+  color: white;
 }

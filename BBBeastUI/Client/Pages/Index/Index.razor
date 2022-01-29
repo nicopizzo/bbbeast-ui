@@ -14,41 +14,7 @@
                 All of the attributes of the beasts are hand drawn and are randomly generated to create the beasts that you see.
             </p>
 
-@*            @if(_ProjectState.PublicSaleLive || _ProjectState.PublicSaleLive)
-            {
-                <p>Minting is now live!</p>
-                <a href="/mint">
-                    <HxButton Text="Mint" Color="ThemeColor.Primary" />
-                </a>
-            }
-            else if(_ProjectState.SoldOut)
-            {
-                <p>We are now sold out. Check us out on a secondary market!</p>
-                <a href="https://testnets.opensea.io/collection/bbbeast">
-                    <HxButton Text="OpenSea" Color="ThemeColor.Primary" />
-                </a>
-            }
-            else
-            {
-                <p>Minting coming soon!</p>
-            }*@
-            <p>There is only going to be 1 options here based on the status.</p>
-            <p>1. Private sale or Minting is live</p>
-            <p>Minting is now live!</p>
-            <a href="/mint">
-                <HxButton Text="Mint" Color="ThemeColor.Primary" />
-            </a>
-
-            <br/>
-            <p>2. We sold out. Check show open sea</p>
-            <p>We are now sold out. Check us out on a secondary market!</p>
-            <a href="https://testnets.opensea.io/collection/bbbeast">
-                <HxButton Text="OpenSea" Color="ThemeColor.Primary" />
-            </a>
-
-           <br/>
-           <p>3. Minting not started yet</p>
-            <p>Minting coming soon!</p>
+            <MintingComingSoon />
         </div>
     </div>
 </div>
@@ -62,12 +28,11 @@
         <Team />
     </div>
 
+    <div id="faq" class="row mt-5">
+        <FAQ />
+    </div>
+
     <div class="row mt-5">
         <img src="/assets/collection.png" class="img-fluid d-inline-block" /> 
     </div>
 </div>
-
-@code{
-    [Inject]
-    protected ProjectState _ProjectState { get; set; }
-}
