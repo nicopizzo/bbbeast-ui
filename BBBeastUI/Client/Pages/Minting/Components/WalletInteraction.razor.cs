@@ -4,18 +4,17 @@ using MetaMask.Blazor.Exceptions;
 using Microsoft.AspNetCore.Components;
 using BBBeastUI.Models;
 using System.Numerics;
-using Havit.Blazor.Components.Web;
-using Havit.Blazor.Components.Web.Bootstrap;
 using NFT.Contract.Encoding;
 using NFT.Contract.Query;
 using System.Text.Json;
+using BBBeastUI.Services;
 
 namespace BBBeastUI.Pages.Minting.Components
 {
     public partial class WalletInteraction : ComponentBase, IDisposable
     {
         [Inject] 
-        protected IHxMessengerService _messenger { get; set; }
+        protected IToastService _messenger { get; set; }
 
         [Inject]
         protected HttpClient _httpClient { get; set; }
@@ -65,7 +64,7 @@ namespace BBBeastUI.Pages.Minting.Components
             {
                 if (!ValidateMint())
                 {
-                    _messenger.AddMessage(CreateMessage("Invalid mint amount", "Error"));
+                    _messenger.PublishMessage("Invalid mint amount", ToastType.Failure);
                     return;
                 }
 
@@ -74,16 +73,16 @@ namespace BBBeastUI.Pages.Minting.Components
                 var data = encodingResult.Result;
 
                 var result = await _metaMaskService.SendTransaction(_web3Options.ContractAddress, weiValue, data[2..]);
-                _messenger.AddMessage(CreateMessage($"Transaction sent: {result}", "Success"));
+                _messenger.PublishMessage($"Transaction sent: {result}", ToastType.Success);
                 await GetSelectedAddress();
             }
             catch (UserDeniedException)
             {
-                _messenger.AddMessage(CreateMessage("User denied the transaction", "Error"));
+                _messenger.PublishMessage("User denied the transaction", ToastType.Failure);
             }
             catch (Exception ex)
             {
-                _messenger.AddMessage(CreateMessage($"Unhandled exception: {ex}", "Error"));
+                _messenger.PublishMessage($"Unhandled exception: {ex}", ToastType.Failure);
             }
         }
 
@@ -127,7 +126,7 @@ namespace BBBeastUI.Pages.Minting.Components
             if (string.IsNullOrEmpty(t))
             {
                 selectedAddress = null;
-                _messenger.AddMessage(CreateMessage("Wallet signed out", "Warning"));
+                _messenger.PublishMessage("Wallet signed out", ToastType.Warning);
             }
             else
             {
@@ -138,7 +137,7 @@ namespace BBBeastUI.Pages.Minting.Components
 
         private async Task ChainChanged((long, Chain) t)
         {
-            _messenger.AddMessage(CreateMessage("Chain changed", "Warning"));
+            _messenger.PublishMessage("Chain changed", ToastType.Warning);
             await GetSelectedNetwork();
             StateHasChanged();
         }
@@ -155,24 +154,6 @@ namespace BBBeastUI.Pages.Minting.Components
             }
 
             return true;
-        }
-
-        private MessengerMessage CreateMessage(string message, string type)
-        {
-            var icon = BootstrapIcon.Question;
-            switch (type)
-            {
-                case "Error":
-                    icon = BootstrapIcon.X;
-                    break;
-                case "Warning":
-                    icon = BootstrapIcon.ExclamationTriangle;
-                    break;
-                case "Success":
-                    icon = BootstrapIcon.Check;
-                    break;
-            }
-            return new MessengerMessage() { AutohideDelay = 1500, Title = message, Icon = icon };
         }
 
         public void Dispose()

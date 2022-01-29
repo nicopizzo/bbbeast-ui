@@ -5,6 +5,7 @@ using Havit.Blazor.Components.Web;
 using BBBeastUI.Models;
 using MetaMask.Blazor;
 using NFT.Contract.Encoding;
+using BBBeastUI.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -22,6 +23,7 @@ builder.Services.AddNFTContractEncoding();
 builder.Services.AddMetaMaskBlazor();
 builder.Services.AddHxServices();
 builder.Services.AddHxMessenger();
+builder.Services.AddSingleton<IToastService, ToastService>();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 await builder.Build().RunAsync();

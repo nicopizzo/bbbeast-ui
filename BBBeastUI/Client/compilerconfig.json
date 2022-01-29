@@ -6,5 +6,9 @@
   {
     "outputFile": "Pages/Index/Components/Timeline.razor.css",
     "inputFile": "Pages/Index/Components/Timeline.razor.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/app.css",
+    "inputFile": "wwwroot/css/app.scss"
   }
 ]
