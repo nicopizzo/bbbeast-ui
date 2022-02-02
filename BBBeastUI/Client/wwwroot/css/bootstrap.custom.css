@@ -11118,25 +11118,13 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-nav.navbar, footer {
+nav.navbar {
   background-color: #ec5e34;
 }
 
 .nav-link, .loading-message {
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
-}
-
-a {
-  color: white !important;
-}
-
-a:hover {
-  color: #0a58ca !important;
-}
-
-th, td, tr:hover {
-  color: white !important;
 }
 
 .btn-primary {
@@ -11152,21 +11140,4 @@ th, td, tr:hover {
 .card {
   background: black;
   border: 1px solid white;
-}
-
-h1, .h1 {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 900;
-}
-
-body {
-  background: black;
-  color: white;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 400;
-}
-
-hr {
-  height: 3px !important;
-  color: white;
 }

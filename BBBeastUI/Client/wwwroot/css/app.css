@@ -1,4 +1,38 @@
-﻿.toast-success {
+﻿a {
+  color: white !important;
+}
+
+a:hover {
+  color: #0a58ca !important;
+}
+
+th, td, tr:hover {
+  color: white !important;
+}
+
+h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 900;
+}
+
+body {
+  background: black;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+}
+
+hr {
+  height: 3px !important;
+  color: white;
+}
+
+footer {
+  height: 80px;
+  background-color: #ec5e34;
+}
+
+.toast-success {
   background-color: green;
 }
 

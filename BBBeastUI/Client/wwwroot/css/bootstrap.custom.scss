@@ -1,25 +1,13 @@
 ﻿@import "global.scss";
 @import "../lib/bootstrap/scss/bootstrap";
 
-nav.navbar, footer {
+nav.navbar {
     background-color: $primaryColor;
 }
 
 .nav-link, .loading-message {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-}
-
-a {
-    color: $textColor !important;
-}
-
-a:hover {
-    color: $hoverColor !important;
-}
-
-th, td, tr:hover {
-    color: $textColor !important;
 }
 
 .btn-primary {
@@ -35,21 +23,4 @@ th, td, tr:hover {
 .card {
     background: $backgroundColor;
     border: 1px solid white;
-}
-
-h1 {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 900;
-}
-
-body {
-    background: $backgroundColor;
-    color: $textColor;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-}
-
-hr {
-    height: 3px !important;
-    color: $textColor;
 }

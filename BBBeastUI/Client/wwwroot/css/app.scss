@@ -4,6 +4,40 @@ $errorColor: red;
 $warningColor: yellow;
 $successColor: green;
 
+a {
+    color: $textColor !important;
+}
+
+a:hover {
+    color: $hoverColor !important;
+}
+
+th, td, tr:hover {
+    color: $textColor !important;
+}
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+}
+
+body {
+    background: $backgroundColor;
+    color: $textColor;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+hr {
+    height: 3px !important;
+    color: $textColor;
+}
+
+footer {
+    height: 80px;
+    background-color: $primaryColor;
+}
+
 .toast-success{
     background-color: $successColor;
 }
