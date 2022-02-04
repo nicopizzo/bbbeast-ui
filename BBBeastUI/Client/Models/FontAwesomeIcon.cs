@@ -17,6 +17,8 @@ namespace BBBeastUI.Models
         public static FontAwesomeIcon Bars = new FontAwesomeIcon("fas fa-bars");
         public static FontAwesomeIcon Discord = new FontAwesomeIcon("fab fa-discord");
         public static FontAwesomeIcon Twitter = new FontAwesomeIcon("fab fa-twitter");
+        public static FontAwesomeIcon PlusCircle = new FontAwesomeIcon("fas fa-plus-circle");
+        public static FontAwesomeIcon MinusCircle = new FontAwesomeIcon("fas fa-minus-circle");
 
         private FontAwesomeIcon(string name)
 		{

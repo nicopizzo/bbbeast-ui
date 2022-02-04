@@ -12,7 +12,6 @@ else if (_web3Options.ChainId != chainId)
 }
 else
 {
-    <p>Create minting transaction below</p>
     <p>Selected Address: @selectedAddress</p>
 
     @if(accountMinted == null)
@@ -28,19 +27,13 @@ else
         <p>Minted: @accountMinted / @_web3Options.MaxMintCount</p>
     }
     
-    <div class="container">
-        <div class="row">
-            <label>Amount to Mint</label>
+    <div class="d-flex flex-column align-items-center">
+        <label>Amount to Mint</label>
+        <div class="d-flex flex-row my-4">
+            <HxIcon Icon=FontAwesomeIcon.MinusCircle @onclick=MinusCount CssClass="fa-4x mx-3" />
+            <h2 class="mx-3" style="font-family: monospace;">@mintCount</h2>
+            <HxIcon Icon=FontAwesomeIcon.PlusCircle @onclick=AddCount CssClass="fa-4x mx-3" />
         </div>
-        <div class="row">
-            <div class="col-5">
-                <div class="input-group">
-                    <input type="number" class="form-control" @bind="mintCount" @bind:event="oninput" min="0" max="@(mintLeft == -1 ? int.MaxValue : mintLeft)" step="1" />
-                     <div class="input-group-append">                    
-                        <button class="btn btn-primary" type="button" @onclick="Mint" disabled=@(accountMinted == null || accountMinted == _web3Options.MaxMintCount)>Mint</button>
-                    </div>   
-                </div>          
-            </div>
-        </div>
+        <button class="btn btn-primary" type="button" @onclick="Mint" disabled=@(accountMinted == null || accountMinted == _web3Options.MaxMintCount)>Mint</button>
     </div>
 }

@@ -24,8 +24,7 @@ namespace BBBeast.UI.Server.Controllers
         {
             try
             {
-                Func<Task<QueryResult>> func = async () => await _NFTQuery.GetNFTCount(address);
-                QueryResult value = await GetCachedValue($"wallet_{address}", func, TimeSpan.FromMinutes(1));
+                QueryResult value = await _NFTQuery.GetNFTCount(address);
                 return Ok(value);
             }
             catch (Exception ex)
@@ -37,8 +36,7 @@ namespace BBBeast.UI.Server.Controllers
         [HttpGet("query/minted")]
         public async Task<IActionResult> GetTotalMinted()
         {
-            Func<Task<QueryResult>> func = async () => await _NFTQuery.GetTotalSupply();
-            QueryResult value = await GetCachedValue("totalMinted", func, TimeSpan.FromMinutes(5));       
+            QueryResult value = await _NFTQuery.GetTotalSupply();
             return Ok(value);
         }
 

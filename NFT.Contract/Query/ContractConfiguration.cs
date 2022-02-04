@@ -9,16 +9,18 @@ namespace NFT.Contract.Query
     {
         public static IServiceCollection AddNFTContractQuery(this IServiceCollection services, IConfiguration config)
         {
-            var network = config.GetSection("Web3:Network").Value;
+            var networkAccess = config.GetSection("Web3:NetworkAccess").Value;            
             var contractAddress = config.GetSection("Web3:ContractAddress").Value;
             
-            if (network == "development")
+            if (networkAccess == "RPC")
             {
-                services.AddSingleton<IClient, RpcClient>(f => new RpcClient(new Uri("HTTP://127.0.0.1:7545")));
+                var rpcEndpoint = config.GetSection("Web3:RPCEndpoint").Value;
+                services.AddSingleton<IClient, RpcClient>(f => new RpcClient(new Uri(rpcEndpoint)));
                 services.AddSingleton<IWeb3>(f => new Web3(f.GetRequiredService<IClient>()));
             }
             else
             {
+                var network = config.GetSection("Web3:Network").Value;
                 var projectId = config.GetSection("Web3:ProjectId").Value;
                 services.AddSingleton<IWeb3>(f => new Web3($"https://{network}.infura.io/v3/{projectId}"));
             }

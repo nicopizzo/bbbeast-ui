@@ -142,6 +142,18 @@ namespace BBBeastUI.Pages.Minting.Components
             StateHasChanged();
         }
 
+        private void AddCount()
+        {
+            if (mintCount + 1 <= mintLeft) mintCount++;
+            StateHasChanged();
+        }
+
+        private void MinusCount()
+        {
+            if (mintCount - 1 >= 0) mintCount--;
+            StateHasChanged();
+        }
+
         private bool ValidateMint()
         {
             if(mintCount <= 0 || 
