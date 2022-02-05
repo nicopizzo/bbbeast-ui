@@ -24,7 +24,7 @@ namespace BBBeast.UI.Server.Controllers
         {
             try
             {
-                QueryResult value = await _NFTQuery.GetNFTCount(address);
+                QueryResult<int> value = await _NFTQuery.GetNFTCount(address);
                 return Ok(value);
             }
             catch (Exception ex)
@@ -34,10 +34,18 @@ namespace BBBeast.UI.Server.Controllers
         }
 
         [HttpGet("query/minted")]
-        public async Task<IActionResult> GetTotalMinted()
+        public async Task<IActionResult> GetMintPageStatus()
         {
-            QueryResult value = await _NFTQuery.GetTotalSupply();
-            return Ok(value);
+            QueryResult<int> supply = await _NFTQuery.GetTotalSupply();
+
+            Func<Task<QueryResult<ContractState>>> func = async () =>
+            {
+                return await _NFTQuery.GetContractState();
+            };
+
+            QueryResult<ContractState> state = await GetCachedValue("state", func, TimeSpan.FromMinutes(1));
+
+            return Ok(new MintPageResult() { TotalMinted = supply.Data, ContractState = state.Data});
         }
 
         [HttpGet("hash")]
@@ -46,7 +54,7 @@ namespace BBBeast.UI.Server.Controllers
             Func<Task<HashDto>> func = async () =>
             {
                 HashDto dto = new();
-                var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
                 dto.Hashes = await System.IO.File.ReadAllLinesAsync(Path.Combine(basePath, "Hashes", "Hashes.txt"));
                 dto.ProvHash = await System.IO.File.ReadAllTextAsync(Path.Combine(basePath, "Hashes", "ProvHash.txt"));
                 return dto;

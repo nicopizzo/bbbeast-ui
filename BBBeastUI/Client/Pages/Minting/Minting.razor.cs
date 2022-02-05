@@ -1,4 +1,5 @@
-﻿using BBBeastUI.Pages.Minting.Components;
+﻿using BBBeastUI.Models;
+using BBBeastUI.Pages.Minting.Components;
 using BBBeastUI.Services;
 using Microsoft.AspNetCore.Components;
 using NFT.Contract.Query;
@@ -15,6 +16,7 @@ namespace BBBeastUI.Pages.Minting
         protected HttpClient _httpClient { get; set; }  
 
         private int? _TotalMinted;
+        private ContractState contractState = ContractState.Public;
         private WalletInteraction walletInteraction;
 
         protected override async Task OnInitializedAsync()
@@ -25,7 +27,9 @@ namespace BBBeastUI.Pages.Minting
                 var result = await _httpClient.GetAsync("api/nft/query/minted");
                 if (result.IsSuccessStatusCode)
                 {
-                    _TotalMinted = JsonSerializer.Deserialize<QueryResult>(await result.Content.ReadAsStringAsync(), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })?.Count;
+                    var data = JsonSerializer.Deserialize<MintPageResult>(await result.Content.ReadAsStringAsync(), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    _TotalMinted = data?.TotalMinted;
+                    contractState = data?.ContractState ?? ContractState.Public;
                 }
             }
             catch { }

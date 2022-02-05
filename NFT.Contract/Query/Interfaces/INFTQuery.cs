@@ -2,7 +2,8 @@
 {
     public interface INFTQuery
     {
-        Task<QueryResult> GetNFTCount(string address);
-        Task<QueryResult> GetTotalSupply();
+        Task<QueryResult<int>> GetNFTCount(string address);
+        Task<QueryResult<int>> GetTotalSupply();
+        Task<QueryResult<ContractState>> GetContractState();
     }
 }

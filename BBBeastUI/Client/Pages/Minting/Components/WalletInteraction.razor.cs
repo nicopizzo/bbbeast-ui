@@ -31,6 +31,9 @@ namespace BBBeastUI.Pages.Minting.Components
         [Inject]
         protected Web3Options _web3Options { get; set; }
 
+        [Parameter]
+        public ContractState contractState { get; set; }
+
         
         private bool hasMetaMask;
         private long chainId = -1;   
@@ -75,12 +78,19 @@ namespace BBBeastUI.Pages.Minting.Components
             {
                 if (!ValidateMint())
                 {
-                    _messenger.PublishMessage("Invalid mint amount", ToastType.Failure);
+                    _messenger.PublishMessage("Invalid mint amount/inactive state", ToastType.Failure);
                     return;
                 }
 
-                BigInteger weiValue = BigInteger.Multiply(BigInteger.Parse(_web3Options.MintCost), mintCount);
-                var encodingResult = _encoder.GetMintFunctionEncoding(mintCount);
+                BigInteger weiValue = BigInteger.Multiply(BigInteger.Parse(_web3Options.PublicMintCost), mintCount);
+                EncodingResult encodingResult = _encoder.GetMintFunctionEncoding(mintCount);
+
+                if (contractState == ContractState.Private)
+                {
+                    weiValue = BigInteger.Multiply(BigInteger.Parse(_web3Options.PrivateMintCost), mintCount);
+                    encodingResult = _encoder.GetPrivateSaleMintFunctionEncoding(mintCount);
+                }
+
                 var data = encodingResult.Result;
 
                 var result = await _metaMaskService.SendTransaction(_web3Options.ContractAddress, weiValue, data[2..]);
@@ -105,7 +115,7 @@ namespace BBBeastUI.Pages.Minting.Components
                 var result = await _httpClient.GetAsync($"/api/nft/query/count/{selectedAddress}");
                 if (result.IsSuccessStatusCode)
                 {
-                    accountMinted = JsonSerializer.Deserialize<QueryResult>(await result.Content.ReadAsStringAsync(), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })?.Count;
+                    accountMinted = JsonSerializer.Deserialize<QueryResult<int>>(await result.Content.ReadAsStringAsync(), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })?.Data;
                 }
                 else
                 {
@@ -163,7 +173,9 @@ namespace BBBeastUI.Pages.Minting.Components
 
         private bool ValidateMint()
         {
-            if(mintCount <= 0 || 
+            if(contractState == null ||
+                contractState == ContractState.NotLive ||
+                mintCount <= 0 || 
                 mintCount > _web3Options.MaxMintCount ||
                 (accountMinted != -1 && 
                 (mintCount > mintLeft ||

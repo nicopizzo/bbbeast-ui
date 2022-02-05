@@ -1,8 +1,8 @@
 ﻿namespace NFT.Contract.Query
 {
-    public class QueryResult
+    public class QueryResult<T>
     {
         public bool IsSuccess { get; set; } = true;
-        public int Count { get; set; }
+        public T Data { get; set; }
     }
 }

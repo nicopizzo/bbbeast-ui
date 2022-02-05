@@ -1,6 +1,7 @@
 ﻿@page "/mint"
 
 @using BBBeastUI.Pages.Minting.Components
+@using NFT.Contract.Query
 
 @inject Web3Options _web3Options
 
@@ -30,6 +31,6 @@
         
         
         <p>Total Minted: @(_TotalMinted?.ToString() ?? "???") / 10000</p>
-        <WalletInteraction @ref="walletInteraction" />
+        <WalletInteraction @ref="walletInteraction" contractState=contractState />
     </div>
 </div>
