@@ -1,18 +1,25 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BBBeastUI.Pages.Minting.Components;
+using BBBeastUI.Services;
+using Microsoft.AspNetCore.Components;
 using NFT.Contract.Query;
 using System.Text.Json;
 
 namespace BBBeastUI.Pages.Minting
 {
-    public partial class Minting : ComponentBase
+    public partial class Minting : ComponentBase, IDisposable
     {
         [Inject]
-        protected HttpClient _httpClient { get; set; }
+        protected IWalletInteractionService _walletInteractionService { get; set; }
+
+        [Inject]
+        protected HttpClient _httpClient { get; set; }  
 
         private int? _TotalMinted;
+        private WalletInteraction walletInteraction;
 
         protected override async Task OnInitializedAsync()
         {
+            _walletInteractionService.RefreshRequested += Refresh;
             try
             {
                 var result = await _httpClient.GetAsync("api/nft/query/minted");
@@ -23,6 +30,16 @@ namespace BBBeastUI.Pages.Minting
             }
             catch { }
             await base.OnInitializedAsync();
+        }
+
+        private void Refresh()
+        {
+            StateHasChanged();
+        }
+
+        public void Dispose()
+        {
+            _walletInteractionService.RefreshRequested -= Refresh;
         }
     }
 }

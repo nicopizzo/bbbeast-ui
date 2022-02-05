@@ -20,6 +20,7 @@ builder.Services.AddMetaMaskBlazor();
 builder.Services.AddHxServices();
 builder.Services.AddHxMessenger();
 builder.Services.AddSingleton<IToastService, ToastService>();
+builder.Services.AddSingleton<IWalletInteractionService, WalletInteractionService>();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 await builder.Build().RunAsync();

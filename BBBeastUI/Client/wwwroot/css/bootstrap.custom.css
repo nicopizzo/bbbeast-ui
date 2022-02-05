@@ -11141,3 +11141,7 @@ nav.navbar {
   background: black;
   border: 1px solid white;
 }
+
+.border {
+  border: 2px solid #ec5e34 !important;
+}

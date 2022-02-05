@@ -13,6 +13,9 @@ namespace BBBeastUI.Pages.Minting.Components
 {
     public partial class WalletInteraction : ComponentBase, IDisposable
     {
+        [Inject]
+        protected IWalletInteractionService _walletInteractionService { get; set; }
+
         [Inject] 
         protected IToastService _messenger { get; set; }
 
@@ -28,11 +31,12 @@ namespace BBBeastUI.Pages.Minting.Components
         [Inject]
         protected Web3Options _web3Options { get; set; }
 
+        
         private bool hasMetaMask;
-        private string selectedAddress;
-        private long chainId = -1;
-        private int? accountMinted = null;
+        private long chainId = -1;   
         private int mintCount = 0;
+        public string selectedAddress;
+        public int? accountMinted = null;
         private int mintLeft
         {
             get
@@ -40,6 +44,13 @@ namespace BBBeastUI.Pages.Minting.Components
                 if (accountMinted == null || accountMinted == -1) return -1;
                 return _web3Options.MaxMintCount - accountMinted.Value;
             }
+        }
+
+        public async Task ConnectWallet()
+        {
+            await _metaMaskService.ConnectMetaMask();
+            await GetSelectedAddress();
+            await GetSelectedNetwork();
         }
 
         protected async override Task OnInitializedAsync()
@@ -86,13 +97,6 @@ namespace BBBeastUI.Pages.Minting.Components
             }
         }
 
-        private async Task ConnectWallet()
-        {
-            await _metaMaskService.ConnectMetaMask();
-            await GetSelectedAddress();
-            await GetSelectedNetwork();
-        }
-
         private async Task GetSelectedAddress()
         {
             selectedAddress = await _metaMaskService.GetSelectedAddress();
@@ -113,6 +117,7 @@ namespace BBBeastUI.Pages.Minting.Components
                 accountMinted = -1;
             }
             StateHasChanged();
+            _walletInteractionService.CallRequestRefresh();
         }
 
         private async Task GetSelectedNetwork()
@@ -133,6 +138,7 @@ namespace BBBeastUI.Pages.Minting.Components
                 await GetSelectedAddress();
             }
             StateHasChanged();
+            _walletInteractionService.CallRequestRefresh();
         }
 
         private async Task ChainChanged((long, Chain) t)
@@ -140,6 +146,7 @@ namespace BBBeastUI.Pages.Minting.Components
             _messenger.PublishMessage("Chain changed", ToastType.Warning);
             await GetSelectedNetwork();
             StateHasChanged();
+            _walletInteractionService.CallRequestRefresh();
         }
 
         private void AddCount()

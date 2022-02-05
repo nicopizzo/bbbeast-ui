@@ -2,18 +2,12 @@
 {
     <p>No MetaMask detected. Please install <a href="https://metamask.io" target="_blank">MetaMask</a>.</p>
 }
-else if (string.IsNullOrEmpty(selectedAddress))
-{
-    <button class="btn btn-primary w-20" @onclick="ConnectWallet">Connect Wallet</button>
-}
 else if (_web3Options.ChainId != chainId)
 {
     <p>Wrong network selected. Please change to @_web3Options.Network</p>
 }
 else
 {
-    <p>Selected Address: @selectedAddress</p>
-
     @if(accountMinted == null)
     {
         <p>Loading mint count</p>
@@ -21,10 +15,6 @@ else
     else if(accountMinted == -1)
     {
         <p>Failed to load mint count</p>
-    }
-    else
-    {
-        <p>Minted: @accountMinted / @_web3Options.MaxMintCount</p>
     }
     
     <div class="d-flex flex-column align-items-center">

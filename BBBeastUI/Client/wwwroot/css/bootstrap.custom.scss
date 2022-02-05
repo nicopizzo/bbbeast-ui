@@ -24,3 +24,7 @@ nav.navbar {
     background: $backgroundColor;
     border: 1px solid white;
 }
+
+.border {
+    border: 2px solid $primaryColor !important;
+}
