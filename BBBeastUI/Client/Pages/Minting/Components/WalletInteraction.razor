@@ -2,6 +2,10 @@
 {
     <p>No MetaMask detected. Please install <a href="https://metamask.io" target="_blank">MetaMask</a>.</p>
 }
+else if (string.IsNullOrEmpty(selectedAddress))
+{
+    <p>Please connect your wallet</p>
+}
 else if (_web3Options.ChainId != chainId)
 {
     <p>Wrong network selected. Please change to Mainnet</p>
@@ -20,9 +24,9 @@ else
     <div class="d-flex flex-column align-items-center">
         <label>Amount to Mint</label>
         <div class="d-flex flex-row my-4">
-            <HxIcon Icon=FontAwesomeIcon.MinusCircle @onclick=MinusCount CssClass="fa-4x mx-3" />
-            <h2 class="mx-3" style="font-family: monospace;">@mintCount</h2>
-            <HxIcon Icon=FontAwesomeIcon.PlusCircle @onclick=AddCount CssClass="fa-4x mx-3" />
+            <div style="cursor: pointer;"><HxIcon Icon=FontAwesomeIcon.MinusCircle @onclick=MinusCount CssClass="fa-4x mx-3" /></div>
+            <h2 class="mx-3 pt-2" style="font-family: monospace;">@mintCount</h2>
+            <div style="cursor: pointer;"><HxIcon Icon=FontAwesomeIcon.PlusCircle @onclick=AddCount CssClass="fa-4x mx-3" /></div>
         </div>
         <button class="btn btn-primary" type="button" @onclick="Mint" disabled=@(accountMinted == null || accountMinted == _web3Options.MaxMintCount)>Mint</button>
     </div>

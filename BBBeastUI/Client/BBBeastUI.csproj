@@ -1,30 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>9f916de2-1bd2-40aa-a441-c38244eb7dda</UserSecretsId>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>9f916de2-1bd2-40aa-a441-c38244eb7dda</UserSecretsId>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="compilerconfig.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Remove="compilerconfig.json" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="compilerconfig.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="compilerconfig.json" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Havit.Blazor.Components.Web.Bootstrap" Version="2.1.2" />
-    <PackageReference Include="MetaMask.Blazor" Version="1.6.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Havit.Blazor.Components.Web.Bootstrap" Version="2.1.2" />
+		<PackageReference Include="MetaMask.Blazor" Version="1.6.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\NFT.Contract\Encoding\NFT.Contract.Encoding.csproj" />
-    <ProjectReference Include="..\..\NFT.Contract\Query.Models\NFT.Contract.Query.Models.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\NFT.Contract\Encoding\NFT.Contract.Encoding.csproj" />
+		<ProjectReference Include="..\..\NFT.Contract\Query.Models\NFT.Contract.Query.Models.csproj" />
+	</ItemGroup>
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="npm install" WorkingDirectory="npm_packages" />
+		<Exec Command="npm run build" WorkingDirectory="npm_packages" />
+	</Target>
 
 </Project>

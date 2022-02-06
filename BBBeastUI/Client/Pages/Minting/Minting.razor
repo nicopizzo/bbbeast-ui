@@ -16,14 +16,15 @@
             <div class="d-flex border align-items-center">
                 @{
                     var account = walletInteraction?.selectedAddress?.Truncate(6, 4);
-                }
-                <p class="m-3 pe-2">@(walletInteraction?.accountMinted?.ToString() ?? "???") / @_web3Options.MaxMintCount BBB</p>
+                }              
                 @if (string.IsNullOrEmpty(account) && walletInteraction != null)
                 {
-                    <button class="btn btn-primary w-20 me-3" @onclick="walletInteraction.ConnectWallet">Connect Wallet</button>
+                    <button class="btn btn-primary w-20 m-3" @onclick="walletInteraction.ConnectWallet">Connect Wallet</button>
                 }
                 else
                 {
+                    <p class="m-3 pe-2">@(walletInteraction?.accountMinted?.ToString() ?? "???") / @_web3Options.MaxMintCount BBB</p>
+                    <div id="addressJazzicon" class="pe-2"></div>
                     <a class="me-3" href="https://rinkeby.etherscan.io/address/@walletInteraction?.selectedAddress" target="_blank">@account</a>
                 }
             </div>           
@@ -31,6 +32,6 @@
         
         
         <p>Total Minted: @(_TotalMinted?.ToString() ?? "???") / 10000</p>
-        <WalletInteraction @ref="walletInteraction" contractState=contractState />
+        <WalletInteraction @ref="walletInteraction" _contractState=contractState />
     </div>
 </div>

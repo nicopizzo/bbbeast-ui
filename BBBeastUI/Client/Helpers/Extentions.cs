@@ -1,4 +1,4 @@
-﻿namespace BBBeastUI.Services
+﻿namespace BBBeastUI.Helpers
 {
     public static class Extentions
     {

@@ -2,6 +2,7 @@
 using BBBeastUI.Pages.Minting.Components;
 using BBBeastUI.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using NFT.Contract.Query;
 using System.Text.Json;
 
@@ -11,6 +12,9 @@ namespace BBBeastUI.Pages.Minting
     {
         [Inject]
         protected IWalletInteractionService _walletInteractionService { get; set; }
+
+        [Inject]
+        protected IJSRuntime _jSRuntime { get; set; }
 
         [Inject]
         protected HttpClient _httpClient { get; set; }  
@@ -36,9 +40,10 @@ namespace BBBeastUI.Pages.Minting
             await base.OnInitializedAsync();
         }
 
-        private void Refresh()
+        private async Task Refresh()
         {
             StateHasChanged();
+            await _jSRuntime.InvokeVoidAsync("Jazzicon.generateJazzicon", "#addressJazzicon", 30, walletInteraction.selectedAddress); 
         }
 
         public void Dispose()

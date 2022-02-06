@@ -2,13 +2,13 @@
 {
     public interface IWalletInteractionService
     {
-        event Action RefreshRequested;
+        event Func<Task> RefreshRequested;
         void CallRequestRefresh();
     }
 
     public class WalletInteractionService : IWalletInteractionService
     {
-        public event Action RefreshRequested;
+        public event Func<Task> RefreshRequested;
 
         public void CallRequestRefresh()
         {

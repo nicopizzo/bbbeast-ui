@@ -32,7 +32,7 @@ namespace BBBeastUI.Pages.Minting.Components
         protected Web3Options _web3Options { get; set; }
 
         [Parameter]
-        public ContractState contractState { get; set; }
+        public ContractState _contractState { get; set; }
 
         
         private bool hasMetaMask;
@@ -85,7 +85,7 @@ namespace BBBeastUI.Pages.Minting.Components
                 BigInteger weiValue = BigInteger.Multiply(BigInteger.Parse(_web3Options.PublicMintCost), mintCount);
                 EncodingResult encodingResult = _encoder.GetMintFunctionEncoding(mintCount);
 
-                if (contractState == ContractState.Private)
+                if (_contractState == ContractState.Private)
                 {
                     weiValue = BigInteger.Multiply(BigInteger.Parse(_web3Options.PrivateMintCost), mintCount);
                     encodingResult = _encoder.GetPrivateSaleMintFunctionEncoding(mintCount);
@@ -173,8 +173,7 @@ namespace BBBeastUI.Pages.Minting.Components
 
         private bool ValidateMint()
         {
-            if(contractState == null ||
-                contractState == ContractState.NotLive ||
+            if(_contractState == ContractState.NotLive ||
                 mintCount <= 0 || 
                 mintCount > _web3Options.MaxMintCount ||
                 (accountMinted != -1 && 
