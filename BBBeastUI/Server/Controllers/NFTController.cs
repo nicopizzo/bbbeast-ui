@@ -44,7 +44,7 @@ namespace BBBeast.UI.Server.Controllers
             };
 
             Task<QueryResult<ContractState>> stateTask = GetCachedValue("state", func, TimeSpan.FromMinutes(1));
-            await Task.WhenAll(supplyTask, stateTask);
+            Task.WaitAll(supplyTask, stateTask);
 
             var supply = await supplyTask;
             var state = await stateTask;
