@@ -36,14 +36,18 @@ namespace BBBeast.UI.Server.Controllers
         [HttpGet("query/minted")]
         public async Task<IActionResult> GetMintPageStatus()
         {
-            QueryResult<int> supply = await _NFTQuery.GetTotalSupply();
+            Task<QueryResult<int>> supplyTask = _NFTQuery.GetTotalSupply();
 
             Func<Task<QueryResult<ContractState>>> func = async () =>
             {
                 return await _NFTQuery.GetContractState();
             };
 
-            QueryResult<ContractState> state = await GetCachedValue("state", func, TimeSpan.FromMinutes(1));
+            Task<QueryResult<ContractState>> stateTask = GetCachedValue("state", func, TimeSpan.FromMinutes(1));
+            await Task.WhenAll(supplyTask, stateTask);
+
+            var supply = await supplyTask;
+            var state = await stateTask;
 
             return Ok(new MintPageResult() { TotalMinted = supply.Data, ContractState = state.Data});
         }
