@@ -145,6 +145,9 @@ namespace BBBeastUI.Pages.Minting.Components
             }
             else
             {
+                accountMinted = null;
+                StateHasChanged();
+                _walletInteractionService.CallRequestRefresh();
                 await GetSelectedAddress();
             }
             StateHasChanged();

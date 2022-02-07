@@ -7,31 +7,53 @@
 
 <div class="container-fluid">
     <div class="d-flex flex-column align-items-center mx-2">
-        <div class="d-flex align-items-center justify-content-between w-100">
-            <div class="d-flex">
-                <p class="pe-2">Contract:</p>
-                <a href="https://rinkeby.etherscan.io/address/@_web3Options.ContractAddress" target="_blank">@_web3Options.ContractAddress?.Truncate(6, 4)</a>
+        <div class="d-flex flex-row w-100">
+            <div class="d-flex align-items-center justify-content-start w-100">
+                <div class="d-flex">
+                    <p class="pe-2">Contract:</p>
+                    <a href="https://rinkeby.etherscan.io/address/@_web3Options.ContractAddress" target="_blank">@_web3Options.ContractAddress?.Truncate(6, 4)</a>
+                </div>
             </div>
-            <h1>MINTING</h1>
-            <div class="d-flex border align-items-center">
-                @{
-                    var account = walletInteraction?.selectedAddress?.Truncate(6, 4);
-                }              
-                @if (string.IsNullOrEmpty(account) && walletInteraction != null)
-                {
-                    <button class="btn btn-primary w-20 m-3" @onclick="walletInteraction.ConnectWallet">Connect Wallet</button>
-                }
-                else
-                {
-                    <p class="m-3 pe-2">@(walletInteraction?.accountMinted?.ToString() ?? "???") / @_web3Options.MaxMintCount BBB</p>
-                    <div id="addressJazzicon" class="pe-2"></div>
-                    <a class="me-3" href="https://rinkeby.etherscan.io/address/@walletInteraction?.selectedAddress" target="_blank">@account</a>
-                }
-            </div>           
+
+            <div class="d-flex justify-content-end w-25">
+                <div class="d-flex flex-grow-1 align-items-center justify-content-center">
+                    @{
+                        var account = walletInteraction?.selectedAddress?.Truncate(6, 4);
+                    }
+                    @if (string.IsNullOrEmpty(account) && walletInteraction != null)
+                    {
+                        <button class="btn btn-primary" @onclick="walletInteraction.ConnectWallet">Connect Wallet</button>
+                    }
+                    else
+                    {
+                        if(walletInteraction?.accountMinted == null)
+                        {
+                            <HxPlaceholder Columns=1 />
+                        }
+                        else
+                        {
+                            <div>@walletInteraction?.accountMinted.ToString()</div>
+                        }
+                        <div class="px-2">/ @_web3Options.MaxMintCount BBB</div>
+                        <div id="addressJazzicon" class="px-2"></div>
+                        <a href="https://rinkeby.etherscan.io/address/@walletInteraction?.selectedAddress" target="_blank">@account</a>
+                    }
+                </div>
+            </div>
         </div>
-        
-        
-        <p>Total Minted: @(_TotalMinted?.ToString() ?? "???") / 10000</p>
+
+        <h1>TOTAL BBBEASTS MINTED</h1>
+        <div class="d-flex justify-content-center w-25 mb-5">            
+            @if (_TotalMinted == null)
+            {
+                <HxPlaceholder Columns=1 Size=PlaceholderSize.Regular CssClass="me-2" />
+            }
+            else
+            {
+                <h1>@_TotalMinted.ToString()</h1>
+            }
+            <h1 class="ps-2">/ 10000</h1>
+        </div>
         <WalletInteraction @ref="walletInteraction" _contractState=contractState />
     </div>
 </div>

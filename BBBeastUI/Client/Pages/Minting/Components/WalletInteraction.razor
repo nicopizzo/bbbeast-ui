@@ -11,16 +11,7 @@ else if (_web3Options.ChainId != chainId)
     <p>Wrong network selected. Please change to Mainnet</p>
 }
 else
-{
-    @if(accountMinted == null)
-    {
-        <p>Loading mint count</p>
-    }
-    else if(accountMinted == -1)
-    {
-        <p>Failed to load mint count</p>
-    }
-    
+{   
     <div class="d-flex flex-column align-items-center">
         <label>Amount to Mint</label>
         <div class="d-flex flex-row my-4">
