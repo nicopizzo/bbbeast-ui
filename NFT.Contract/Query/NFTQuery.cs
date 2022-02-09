@@ -6,11 +6,31 @@ namespace NFT.Contract.Query
 {
     public class NFTQuery : INFTQuery
     {
-        private ContractHandler _ContractHandler;
+        private readonly ContractHandler _ContractHandler;
+        private readonly IWeb3 _Web3;
 
         public NFTQuery(IWeb3 web3, string contractAddress)
         {
             _ContractHandler = web3.Eth.GetContractHandler(contractAddress);
+            _Web3 = web3;
+        }
+
+        public async Task<QueryResult<TransactionState>> GetTransactionStatus(string hash)
+        {
+            var state = new QueryResult<TransactionState>() { Data = TransactionState.Pending };
+            var result = await _Web3.Eth.Transactions.GetTransactionReceipt.SendRequestAsync(hash);
+            if (result == null) return state;
+            switch (result.Status.HexValue)
+            {
+                case "0x1":
+                    state.Data = TransactionState.Success;
+                    break;
+                default:
+                    state.Data = TransactionState.Failed;
+                    break;
+            }
+
+            return state;
         }
 
         public async Task<QueryResult<ContractState>> GetContractState()

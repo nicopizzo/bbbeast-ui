@@ -11145,3 +11145,11 @@ nav.navbar {
 .border {
   border: 2px solid #ec5e34 !important;
 }
+
+.modal {
+  color: black;
+}
+
+.modal a {
+  color: black !important;
+}

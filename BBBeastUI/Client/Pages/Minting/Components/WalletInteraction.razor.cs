@@ -34,6 +34,8 @@ namespace BBBeastUI.Pages.Minting.Components
         [Parameter]
         public ContractState _contractState { get; set; }
 
+        private TransactionModel _transactionModel;
+
         
         private bool hasMetaMask;
         private long chainId = -1;   
@@ -93,8 +95,8 @@ namespace BBBeastUI.Pages.Minting.Components
 
                 var data = encodingResult.Result;
 
-                var result = await _metaMaskService.SendTransaction(_web3Options.ContractAddress, weiValue, data[2..]);
-                _messenger.PublishMessage($"Transaction sent: {result}", ToastType.Success);
+                var tx = await _metaMaskService.SendTransaction(_web3Options.ContractAddress, weiValue, data[2..]);
+                await _transactionModel.ShowModel(tx);
                 await GetSelectedAddress();
             }
             catch (UserDeniedException)

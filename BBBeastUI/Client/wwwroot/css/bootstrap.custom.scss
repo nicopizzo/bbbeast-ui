@@ -28,3 +28,11 @@ nav.navbar {
 .border {
     border: 2px solid $primaryColor !important;
 }
+
+.modal {
+    color: $backgroundColor;
+}
+
+.modal a{
+    color: $backgroundColor !important;
+}

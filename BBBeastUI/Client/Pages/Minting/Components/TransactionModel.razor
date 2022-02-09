@@ -1,0 +1,32 @@
+﻿@using NFT.Contract.Query
+
+<HxModal @ref="model" Title="Transaction Status" Size="ModalSize.ExtraLarge" OnClosed=CloseModel>
+	<BodyTemplate>
+		<div class="container-fluid">
+			<div class="d-flex flex-column">
+				<div class="d-flex flex-row justify-content-center">
+					<a href="@($"{Links.ETHERSCAN}/tx/{transactionId}")">@transactionId</a>
+					<div class="ps-1">has been submitted.</div>
+				</div>
+				
+				<div class="d-flex flex-row align-items-center justify-content-center mt-5">
+					@switch (transactionState)
+					{
+						case TransactionState.Pending:							
+							<div class="pe-4">Pending...</div>
+							<div class="spinner-grow btn-primary" role="status"></div>
+							break;
+
+						case TransactionState.Failed:
+							<p style="color:red;">Transaction Failed</p>
+							break;
+
+						case TransactionState.Success:
+							<p style="color:green;">Transaction Successful</p>
+							break;
+					}
+				</div>
+			</div>
+		</div>
+	</BodyTemplate>
+</HxModal>

@@ -22,3 +22,4 @@ else
         <button class="btn btn-primary" type="button" @onclick="Mint" disabled=@(accountMinted == null || accountMinted == _web3Options.MaxMintCount)>Mint</button>
     </div>
 }
+<TransactionModel @ref=_transactionModel />

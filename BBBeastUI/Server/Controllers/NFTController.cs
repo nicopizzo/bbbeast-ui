@@ -33,6 +33,25 @@ namespace BBBeast.UI.Server.Controllers
             }           
         }
 
+        [HttpGet("query/tx/{hash}")]
+        public async Task<IActionResult> GetTransactionStatus(string hash)
+        {
+            try
+            {
+                Func<Task<QueryResult<TransactionState>>> func = async () =>
+                {
+                    return await _NFTQuery.GetTransactionStatus(hash);
+                };
+
+                QueryResult<TransactionState> value = await GetCachedValue($"hash{hash}", func, TimeSpan.FromSeconds(10));
+                return Ok(value);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("query/minted")]
         public async Task<IActionResult> GetMintPageStatus()
         {

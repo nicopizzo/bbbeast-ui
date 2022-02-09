@@ -1,5 +1,4 @@
-﻿using BBBeastUI.Models;
-using BBBeastUI.Pages.Minting.Components;
+﻿using BBBeastUI.Pages.Minting.Components;
 using BBBeastUI.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
