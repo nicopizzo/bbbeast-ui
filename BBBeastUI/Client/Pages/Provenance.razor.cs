@@ -1,14 +1,14 @@
-﻿using BBBeastUI.Models;
+﻿using BBBeast.UI.Shared.Interfaces;
+using BBBeast.UI.Shared.Models;
 using Havit.Blazor.Components.Web.Bootstrap;
 using Microsoft.AspNetCore.Components;
-using System.Text.Json;
 
 namespace BBBeastUI.Pages
 {
     public partial class Provenance : ComponentBase
     {
         [Inject]
-        protected HttpClient _httpClient { get; set; }
+        protected IProvenanceHashService _HashService { get; set; }
 
         private string _Concated
         {
@@ -35,12 +35,8 @@ namespace BBBeastUI.Pages
         {           
             try
             {
-                var result = await _httpClient.GetAsync("api/nft/hash");
-                if (result.IsSuccessStatusCode)
-                {
-                    _HashDto = JsonSerializer.Deserialize<HashDto>(await result.Content.ReadAsStringAsync(), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-                    _Loaded = true;
-                }
+                _HashDto = await _HashService.GetProvenanceHash();
+                if(_HashDto != null) _Loaded = true;
             }
             catch
             {

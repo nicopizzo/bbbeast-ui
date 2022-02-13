@@ -1,11 +1,7 @@
-﻿namespace BBBeastUI.Services
-{
-    public interface IWalletInteractionService
-    {
-        event Func<Task> RefreshRequested;
-        void CallRequestRefresh();
-    }
+﻿using BBBeast.UI.Shared.Interfaces;
 
+namespace BBBeastUI.Services
+{
     public class WalletInteractionService : IWalletInteractionService
     {
         public event Func<Task> RefreshRequested;

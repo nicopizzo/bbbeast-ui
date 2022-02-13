@@ -1,14 +1,14 @@
-﻿using Havit.Blazor.Components.Web.Bootstrap;
+﻿using BBBeast.UI.Shared.Interfaces;
+using Havit.Blazor.Components.Web.Bootstrap;
 using Microsoft.AspNetCore.Components;
 using NFT.Contract.Query;
-using System.Text.Json;
 
 namespace BBBeastUI.Pages.Minting.Components
 {
     public partial class TransactionModel : ComponentBase
     {
         [Inject]
-        protected HttpClient _httpClient { get; set; }
+        protected INFTQueryService _NFTQueryService { get; set; }
 
         private HxModal model;
         private string transactionId;
@@ -42,12 +42,9 @@ namespace BBBeastUI.Pages.Minting.Components
                 while(transactionState == TransactionState.Pending)
                 {
                     if (cancellationToken.IsCancellationRequested || count == 10) break;
-                    var response = await _httpClient.GetAsync($"/api/nft/query/tx/{tx}", cancellationToken);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        transactionState = JsonSerializer.Deserialize<QueryResult<TransactionState>>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })?.Data;
-                        if (transactionState != TransactionState.Pending) break;
-                    }
+                    var result = await _NFTQueryService.GetTransactionState(tx, cancellationToken);
+                    transactionState = result.Data;
+                    if (transactionState != TransactionState.Pending) break;
                     count++;
                     await Task.Delay(10000);
                 }              

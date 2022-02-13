@@ -1,4 +1,4 @@
-﻿namespace BBBeastUI.Models
+﻿namespace BBBeast.UI.Shared.Models
 {
     public class HashDto
     {

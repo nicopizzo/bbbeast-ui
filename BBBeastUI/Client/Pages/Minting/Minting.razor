@@ -3,8 +3,6 @@
 @using BBBeastUI.Pages.Minting.Components
 @using NFT.Contract.Query
 
-@inject Web3Options _web3Options
-
 <div class="container-fluid">
     <div class="d-flex flex-column align-items-center mx-2">
         <div class="d-flex flex-row w-100">
@@ -44,16 +42,16 @@
 
         <h1>TOTAL BBBEASTS MINTED</h1>
         <div class="d-flex justify-content-center w-25 mb-5">            
-            @if (_TotalMinted == null)
+            @if (_MintResult == null)
             {
                 <HxPlaceholder Columns=1 Size=PlaceholderSize.Regular CssClass="me-2" />
             }
             else
             {
-                <h1>@_TotalMinted.ToString()</h1>
+                <h1>@_MintResult.TotalMinted.ToString()</h1>
             }
             <h1 class="ps-2">/ 10000</h1>
         </div>
-        <WalletInteraction @ref="walletInteraction" _contractState=contractState />
+        <WalletInteraction @ref="walletInteraction" _contractState="_MintResult?.ContractState ?? ContractState.Public" />
     </div>
 </div>

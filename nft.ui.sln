@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFT.Contract.Encoding", "NF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFT.Contract.Query.Models", "NFT.Contract\Query.Models\NFT.Contract.Query.Models.csproj", "{21A5D48D-9912-4FFE-9B5C-DCB293D53B8D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BBBeast.UI.Shared", "BBBeastUI\Shared\BBBeast.UI.Shared.csproj", "{4DE51CE7-92C6-497F-AC3B-20F92B3DBFAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{21A5D48D-9912-4FFE-9B5C-DCB293D53B8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21A5D48D-9912-4FFE-9B5C-DCB293D53B8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21A5D48D-9912-4FFE-9B5C-DCB293D53B8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DE51CE7-92C6-497F-AC3B-20F92B3DBFAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DE51CE7-92C6-497F-AC3B-20F92B3DBFAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DE51CE7-92C6-497F-AC3B-20F92B3DBFAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DE51CE7-92C6-497F-AC3B-20F92B3DBFAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

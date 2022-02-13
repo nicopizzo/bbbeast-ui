@@ -2,12 +2,11 @@
 using MetaMask.Blazor.Enums;
 using MetaMask.Blazor.Exceptions;
 using Microsoft.AspNetCore.Components;
-using BBBeastUI.Models;
 using System.Numerics;
 using NFT.Contract.Encoding;
 using NFT.Contract.Query;
-using System.Text.Json;
-using BBBeastUI.Services;
+using BBBeast.UI.Shared.Interfaces;
+using BBBeast.UI.Shared.Models;
 
 namespace BBBeastUI.Pages.Minting.Components
 {
@@ -20,7 +19,7 @@ namespace BBBeastUI.Pages.Minting.Components
         protected IToastService _messenger { get; set; }
 
         [Inject]
-        protected HttpClient _httpClient { get; set; }
+        protected INFTQueryService _queryService { get; set; }
 
         [Inject]
         protected INFTEncoding _encoder { get; set; }
@@ -58,19 +57,25 @@ namespace BBBeastUI.Pages.Minting.Components
             await GetSelectedNetwork();
         }
 
-        protected async override Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
             MetaMaskService.AccountChangedEvent += AccountChanged;
             MetaMaskService.ChainChangedEvent += ChainChanged;
+        }
 
-            hasMetaMask = await _metaMaskService.HasMetaMask();
-            if (hasMetaMask) await _metaMaskService.ListenToEvents();
-
-            bool isSiteConnected = await _metaMaskService.IsSiteConnected();
-            if (isSiteConnected)
+        protected async override Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
             {
-                await GetSelectedAddress();
-                await GetSelectedNetwork();
+                hasMetaMask = await _metaMaskService.HasMetaMask();
+                if (hasMetaMask) await _metaMaskService.ListenToEvents();
+
+                bool isSiteConnected = await _metaMaskService.IsSiteConnected();
+                if (isSiteConnected)
+                {
+                    await GetSelectedAddress();
+                    await GetSelectedNetwork();
+                }
             }
         }
 
@@ -114,15 +119,8 @@ namespace BBBeastUI.Pages.Minting.Components
             selectedAddress = await _metaMaskService.GetSelectedAddress();
             try
             {
-                var result = await _httpClient.GetAsync($"/api/nft/query/count/{selectedAddress}");
-                if (result.IsSuccessStatusCode)
-                {
-                    accountMinted = JsonSerializer.Deserialize<QueryResult<int>>(await result.Content.ReadAsStringAsync(), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })?.Data;
-                }
-                else
-                {
-                    accountMinted = -1;
-                }
+                var result = await _queryService.GetMintedAmount(selectedAddress);
+                accountMinted = result.Data;
             }
             catch
             {

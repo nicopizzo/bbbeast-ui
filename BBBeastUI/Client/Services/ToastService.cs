@@ -1,13 +1,10 @@
-﻿using BBBeastUI.Models;
+﻿using BBBeast.UI.Shared.Interfaces;
+using BBBeast.UI.Shared.Models;
+using BBBeastUI.Models;
 using Havit.Blazor.Components.Web;
 
 namespace BBBeastUI.Services
 {
-    public interface IToastService
-    {
-        void PublishMessage(string message, ToastType type);
-    }
-
     public class ToastService : IToastService
     {
         private readonly IHxMessengerService _MessengerService;

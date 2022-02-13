@@ -1,14 +1,17 @@
-﻿using BBBeastUI.Pages.Minting.Components;
-using BBBeastUI.Services;
+﻿using BBBeast.UI.Shared.Interfaces;
+using BBBeast.UI.Shared.Models;
+using BBBeastUI.Pages.Minting.Components;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using NFT.Contract.Query;
-using System.Text.Json;
 
 namespace BBBeastUI.Pages.Minting
 {
     public partial class Minting : ComponentBase, IDisposable
     {
+        [Inject]
+        protected Web3Options _web3Options { get; set; }
+
         [Inject]
         protected IWalletInteractionService _walletInteractionService { get; set; }
 
@@ -16,27 +19,40 @@ namespace BBBeastUI.Pages.Minting
         protected IJSRuntime _jSRuntime { get; set; }
 
         [Inject]
-        protected HttpClient _httpClient { get; set; }  
+        protected INFTQueryService _nftQueryService { get; set; }  
 
-        private int? _TotalMinted;
-        private ContractState contractState = ContractState.Public;
+        [Inject]
+        protected PersistentComponentState applicationState { get; set; }
+
+        private MintPageResult _MintResult;
         private WalletInteraction walletInteraction;
+        private PersistingComponentStateSubscription _subscription;
 
         protected override async Task OnInitializedAsync()
         {
-            _walletInteractionService.RefreshRequested += Refresh;
+            _subscription = applicationState.RegisterOnPersisting(PersistMintData);            
             try
             {
-                var result = await _httpClient.GetAsync("api/nft/query/minted");
-                if (result.IsSuccessStatusCode)
+                _walletInteractionService.RefreshRequested += Refresh;
+                if (applicationState.TryTakeFromJson<MintPageResult>("fetchData", out var stored))
                 {
-                    var data = JsonSerializer.Deserialize<MintPageResult>(await result.Content.ReadAsStringAsync(), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-                    _TotalMinted = data?.TotalMinted;
-                    contractState = data?.ContractState ?? ContractState.Public;
+                    _MintResult = stored;
                 }
+                else
+                {
+                    _MintResult = await _nftQueryService.GetTotalMinted();
+                }    
             }
-            catch { }
-            await base.OnInitializedAsync();
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        private Task PersistMintData()
+        {
+            applicationState.PersistAsJson("fetchData", _MintResult);
+            return Task.CompletedTask;
         }
 
         private async Task Refresh()
@@ -48,6 +64,7 @@ namespace BBBeastUI.Pages.Minting
         public void Dispose()
         {
             _walletInteractionService.RefreshRequested -= Refresh;
+            _subscription.Dispose();
         }
     }
 }

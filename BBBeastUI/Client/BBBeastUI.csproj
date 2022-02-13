@@ -25,6 +25,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\NFT.Contract\Encoding\NFT.Contract.Encoding.csproj" />
 		<ProjectReference Include="..\..\NFT.Contract\Query.Models\NFT.Contract.Query.Models.csproj" />
+		<ProjectReference Include="..\Shared\BBBeast.UI.Shared.csproj" />
 	</ItemGroup>
 
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
