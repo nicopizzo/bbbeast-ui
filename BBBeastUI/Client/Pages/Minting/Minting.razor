@@ -18,23 +18,19 @@
                     @{
                         var account = walletInteraction?.selectedAddress?.Truncate(6, 4);
                     }
-                    @if (string.IsNullOrEmpty(account) && walletInteraction != null)
+                    @if(walletInteraction == null || walletInteraction.isLoading)
+                    {
+                        <HxPlaceholder Columns=3 Size=PlaceholderSize.Large />
+                    }
+                    else if (string.IsNullOrEmpty(account))
                     {
                         <button class="btn btn-primary" @onclick="walletInteraction.ConnectWallet">Connect Wallet</button>
                     }
                     else
                     {
-                        if(walletInteraction?.accountMinted == null)
-                        {
-                            <HxPlaceholder Columns=1 />
-                        }
-                        else
-                        {
-                            <div>@walletInteraction?.accountMinted.ToString()</div>
-                        }
-                        <div class="px-2">/ @_web3Options.MaxMintCount BBB</div>
+                        <div class="px-2">@walletInteraction.accountMinted.ToString() / @_web3Options.MaxMintCount BBB</div>
                         <div id="addressJazzicon" class="px-2"></div>
-                        <a href="@($"{Links.ETHERSCAN}/address/{walletInteraction?.selectedAddress}")" target="_blank">@account</a>
+                        <a href="@($"{Links.ETHERSCAN}/address/{walletInteraction.selectedAddress}")" target="_blank">@account</a>
                     }
                 </div>
             </div>

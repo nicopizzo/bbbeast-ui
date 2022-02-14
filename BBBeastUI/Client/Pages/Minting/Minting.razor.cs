@@ -43,9 +43,8 @@ namespace BBBeastUI.Pages.Minting
                     _MintResult = await _nftQueryService.GetTotalMinted();
                 }    
             }
-            catch(Exception ex)
+            catch
             {
-                Console.WriteLine(ex.ToString());
             }
         }
 

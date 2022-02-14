@@ -39,8 +39,9 @@ namespace BBBeastUI.Pages.Minting.Components
         private bool hasMetaMask;
         private long chainId = -1;   
         private int mintCount = 0;
-        public string selectedAddress;
-        public int? accountMinted = null;
+        public string selectedAddress { get; private set; }
+        public int? accountMinted { get; private set; } = null;
+        public bool isLoading { get; private set; }
         private int mintLeft
         {
             get
@@ -61,6 +62,7 @@ namespace BBBeastUI.Pages.Minting.Components
         {
             MetaMaskService.AccountChangedEvent += AccountChanged;
             MetaMaskService.ChainChangedEvent += ChainChanged;
+            isLoading = true;
         }
 
         protected async override Task OnAfterRenderAsync(bool firstRender)
@@ -76,6 +78,8 @@ namespace BBBeastUI.Pages.Minting.Components
                     await GetSelectedAddress();
                     await GetSelectedNetwork();
                 }
+                isLoading = false;
+                _walletInteractionService.CallRequestRefresh();
             }
         }
 
@@ -134,6 +138,7 @@ namespace BBBeastUI.Pages.Minting.Components
         {
             var chainInfo = await _metaMaskService.GetSelectedChain();
             chainId = chainInfo.chainId;
+            StateHasChanged();
         }
 
         private async Task AccountChanged(string t)
