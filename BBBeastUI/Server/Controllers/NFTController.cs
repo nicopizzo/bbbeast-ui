@@ -17,6 +17,20 @@ namespace BBBeast.UI.Server.Controllers
             _HashService = hashService;
         }
 
+        [HttpGet("query/ens/{address}")]
+        public async Task<IActionResult> ENSReverseLookup(string address)
+        {
+            try
+            {
+                var value = await _QueryService.ENSReverseLookup(address);
+                return Ok(value);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("query/count/{address}")]
         public async Task<IActionResult> GetWalletCount(string address)
         {

@@ -1,4 +1,8 @@
-﻿@if (isLoading)
+﻿@if (_contractState == NFT.Contract.Query.ContractState.NotLive)
+{
+    <label>Minting not yet live. Join the <a href="@Links.DISCORD">discord</a> for updates on minting.</label>
+}
+else if (isLoading)
 {
     <HxPlaceholder Columns=5 Size=PlaceholderSize.Large />
 }
@@ -15,8 +19,18 @@ else if (_web3Options.ChainId != chainId)
     <p>Wrong network selected. Please change to Mainnet</p>
 }
 else
-{   
+{
     <div class="d-flex flex-column align-items-center">
+        @switch (_contractState)
+        {
+            case NFT.Contract.Query.ContractState.Private:
+                <h3>Private Mint</h3>
+                break;
+
+            case NFT.Contract.Query.ContractState.Public:
+                <h3>Public Mint</h3>
+                break;
+        }
         <label>Amount to Mint</label>
         <div class="d-flex flex-row my-4">
             <div style="cursor: pointer;"><HxIcon Icon=FontAwesomeIcon.MinusCircle @onclick=MinusCount CssClass="fa-4x mx-3" /></div>

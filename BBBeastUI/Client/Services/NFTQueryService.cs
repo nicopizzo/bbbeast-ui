@@ -13,6 +13,17 @@ namespace BBBeastUI.Services
             _HttpClient = httpClient;
         }
 
+        public async Task<QueryResult<string>> ENSReverseLookup(string address, CancellationToken cancellationToken = default)
+        {
+            var queryResult = new QueryResult<string>() { IsSuccess = false };
+            var result = await _HttpClient.GetAsync($"/api/nft/query/ens/{address}", cancellationToken).ConfigureAwait(false);
+            if (result.IsSuccessStatusCode)
+            {
+                queryResult = JsonSerializer.Deserialize<QueryResult<string>>(await result.Content.ReadAsStringAsync(), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            }
+            return queryResult;
+        }
+
         public async Task<QueryResult<int>> GetMintedAmount(string address, CancellationToken cancellationToken = default)
         {
             var queryResult = new QueryResult<int>() { IsSuccess = false, Data = -1 };

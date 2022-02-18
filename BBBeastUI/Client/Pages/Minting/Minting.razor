@@ -17,6 +17,10 @@
                 <div class="d-flex flex-grow-1 align-items-center justify-content-center">
                     @{
                         var account = walletInteraction?.selectedAddress?.Truncate(6, 4);
+                        if (!string.IsNullOrEmpty(walletInteraction?.selectedAddressENS))
+                        {
+                            account = walletInteraction?.selectedAddressENS;
+                        }
                     }
                     @if(walletInteraction == null || walletInteraction.isLoading)
                     {

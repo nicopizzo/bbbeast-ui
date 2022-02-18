@@ -10,7 +10,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
     <PackageReference Include="Nethereum.ABI" Version="4.1.1" />
-    <PackageReference Include="Nethereum.Web3Lite" Version="4.1.1" />
+    <PackageReference Include="Nethereum.ENS" Version="4.1.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -40,6 +40,7 @@ namespace BBBeastUI.Pages.Minting.Components
         private long chainId = -1;   
         private int mintCount = 0;
         public string selectedAddress { get; private set; }
+        public string selectedAddressENS { get; private set; }
         public int? accountMinted { get; private set; } = null;
         public bool isLoading { get; private set; }
         private int mintLeft
@@ -121,6 +122,20 @@ namespace BBBeastUI.Pages.Minting.Components
         private async Task GetSelectedAddress()
         {
             selectedAddress = await _metaMaskService.GetSelectedAddress();
+            var mintAmountTask = UpdateMintedAmount();
+            var ensTask = UpdateENS();
+            await Task.WhenAll(mintAmountTask, ensTask);
+        }
+
+        private async Task GetSelectedNetwork()
+        {
+            var chainInfo = await _metaMaskService.GetSelectedChain();
+            chainId = chainInfo.chainId;
+            StateHasChanged();
+        }
+
+        private async Task UpdateMintedAmount()
+        {
             try
             {
                 var result = await _queryService.GetMintedAmount(selectedAddress);
@@ -134,11 +149,19 @@ namespace BBBeastUI.Pages.Minting.Components
             _walletInteractionService.CallRequestRefresh();
         }
 
-        private async Task GetSelectedNetwork()
+        private async Task UpdateENS()
         {
-            var chainInfo = await _metaMaskService.GetSelectedChain();
-            chainId = chainInfo.chainId;
+            try
+            {
+                var result = await _queryService.ENSReverseLookup(selectedAddress);
+                selectedAddressENS = result.Data;
+            }
+            catch
+            {
+                accountMinted = null;
+            }
             StateHasChanged();
+            _walletInteractionService.CallRequestRefresh();
         }
 
         private async Task AccountChanged(string t)

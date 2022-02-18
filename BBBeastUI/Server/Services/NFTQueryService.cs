@@ -13,6 +13,16 @@ namespace BBBeast.UI.Server.Services
             _NFTQuery = nFTQuery;
         }
 
+        public async Task<QueryResult<string>> ENSReverseLookup(string address, CancellationToken cancellationToken = default)
+        {
+            Func<Task<QueryResult<string>>> func = async () =>
+            {
+                return await _NFTQuery.ENSReverseLookup(address);
+            };
+            QueryResult<string> ens = await GetCachedValue($"ens{address}", func, TimeSpan.FromHours(1));
+            return ens;
+        }
+
         public async Task<QueryResult<int>> GetMintedAmount(string address, CancellationToken cancellationToken = default)
         {
             QueryResult<int> value = await _NFTQuery.GetNFTCount(address);

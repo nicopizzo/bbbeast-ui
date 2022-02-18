@@ -1,4 +1,5 @@
 ﻿using Nethereum.Contracts.ContractHandlers;
+using Nethereum.ENS;
 using Nethereum.Web3;
 using NFT.Contract.Query.Queries;
 
@@ -8,11 +9,20 @@ namespace NFT.Contract.Query
     {
         private readonly ContractHandler _ContractHandler;
         private readonly IWeb3 _Web3;
+        private readonly ENSService _ENSService;
 
         public NFTQuery(IWeb3 web3, string contractAddress)
         {
             _ContractHandler = web3.Eth.GetContractHandler(contractAddress);
+            _ENSService = new ENSService((Web3)web3);
             _Web3 = web3;
+        }
+
+        public async Task<QueryResult<string>> ENSReverseLookup(string address)
+        {
+            QueryResult<string> result = new();
+            result.Data = await _ENSService.ReverseResolveAsync(address);
+            return result;
         }
 
         public async Task<QueryResult<TransactionState>> GetTransactionStatus(string hash)
