@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using BBBeast.UI.Shared.Interfaces;
 using BBBeast.UI.Shared.Models;
 using BBBeastUI.Services;
@@ -11,12 +12,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
+builder.Services.AddOptions();
 
-var web3Options = new Web3Options();
-builder.Configuration.Bind("Web3", web3Options);
-builder.Services.AddSingleton(web3Options);
+builder.Services.Configure<Web3Options>(builder.Configuration.GetSection("Web3"));
 builder.Services.AddNFTContractQuery(builder.Configuration);
 builder.Services.AddMemoryCache();
+builder.Services.AddInMemoryRateLimiting();
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
 
 builder.Services.AddScoped<INFTQueryService, BBBeast.UI.Server.Services.NFTQueryService>();
 builder.Services.AddScoped<IProvenanceHashService, BBBeast.UI.Server.Services.ProvHashService>();
@@ -44,6 +47,8 @@ else
 }
 
 app.UseHttpsRedirection();
+
+app.UseIpRateLimiting();
 
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();

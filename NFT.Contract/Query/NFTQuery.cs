@@ -47,6 +47,20 @@ namespace NFT.Contract.Query
         {
             QueryResult<ContractState> state = new QueryResult<ContractState>() { Data = ContractState.NotLive };
 
+            // first check if we are sold out
+            TotalSupplyQuery totalSupplyQuery = new TotalSupplyQuery();
+            var totalSupplyTask = _ContractHandler.QueryAsync<TotalSupplyQuery, int>(totalSupplyQuery);
+            MaxSupplyQuery maxSupplyQuery = new MaxSupplyQuery();
+            var maxSupplyTask = _ContractHandler.QueryAsync<MaxSupplyQuery, int>(maxSupplyQuery);
+
+            await Task.WhenAll(totalSupplyTask, maxSupplyTask);
+            if((await totalSupplyTask) == (await maxSupplyTask))
+            {
+                state.Data = ContractState.SoldOut;
+                return state;
+            }
+
+            // check if public
             var isLiveFunction = new IsLiveQuery();
             var result = await _ContractHandler.QueryAsync<IsLiveQuery, bool>(isLiveFunction);
             if (result)
@@ -55,6 +69,7 @@ namespace NFT.Contract.Query
                 return state;
             }
 
+            // check if private
             var isPrivateLiveFunction = new IsPrivateLiveQuery();
             result = await _ContractHandler.QueryAsync<IsPrivateLiveQuery, bool>(isPrivateLiveFunction);
             if (result)

@@ -7,6 +7,7 @@ using NFT.Contract.Encoding;
 using NFT.Contract.Query;
 using BBBeast.UI.Shared.Interfaces;
 using BBBeast.UI.Shared.Models;
+using Microsoft.Extensions.Options;
 
 namespace BBBeastUI.Pages.Minting.Components
 {
@@ -28,7 +29,7 @@ namespace BBBeastUI.Pages.Minting.Components
         protected MetaMaskService _metaMaskService { get; set; }
 
         [Inject]
-        protected Web3Options _web3Options { get; set; }
+        protected IOptions<Web3Options> _web3Options { get; set; }
 
         [Parameter]
         public ContractState _contractState { get; set; }
@@ -48,7 +49,7 @@ namespace BBBeastUI.Pages.Minting.Components
             get
             {
                 if (accountMinted == null || accountMinted == -1) return -1;
-                return _web3Options.MaxMintCount - accountMinted.Value;
+                return _web3Options.Value.MaxMintCount - accountMinted.Value;
             }
         }
 
@@ -94,18 +95,18 @@ namespace BBBeastUI.Pages.Minting.Components
                     return;
                 }
 
-                BigInteger weiValue = BigInteger.Multiply(BigInteger.Parse(_web3Options.PublicMintCost), mintCount);
+                BigInteger weiValue = BigInteger.Multiply(BigInteger.Parse(_web3Options.Value.PublicMintCost), mintCount);
                 EncodingResult encodingResult = _encoder.GetMintFunctionEncoding(mintCount);
 
                 if (_contractState == ContractState.Private)
                 {
-                    weiValue = BigInteger.Multiply(BigInteger.Parse(_web3Options.PrivateMintCost), mintCount);
+                    weiValue = BigInteger.Multiply(BigInteger.Parse(_web3Options.Value.PrivateMintCost), mintCount);
                     encodingResult = _encoder.GetPrivateSaleMintFunctionEncoding(mintCount);
                 }
 
                 var data = encodingResult.Result;
 
-                var tx = await _metaMaskService.SendTransaction(_web3Options.ContractAddress, weiValue, data[2..]);
+                var tx = await _metaMaskService.SendTransaction(_web3Options.Value.ContractAddress, weiValue, data[2..]);
                 await _transactionModel.ShowModel(tx);
                 await GetSelectedAddress();
             }
@@ -206,10 +207,10 @@ namespace BBBeastUI.Pages.Minting.Components
         {
             if(_contractState == ContractState.NotLive ||
                 mintCount <= 0 || 
-                mintCount > _web3Options.MaxMintCount ||
+                mintCount > _web3Options.Value.MaxMintCount ||
                 (accountMinted != -1 && 
                 (mintCount > mintLeft ||
-                accountMinted >= _web3Options.MaxMintCount)))
+                accountMinted >= _web3Options.Value.MaxMintCount)))
             {
                 return false;
             }

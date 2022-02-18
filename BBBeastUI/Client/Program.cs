@@ -8,9 +8,8 @@ using BBBeast.UI.Shared.Models;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-var web3Options = new Web3Options();
-builder.Configuration.Bind("Web3", web3Options);
-builder.Services.AddSingleton(web3Options);
+builder.Services.AddOptions();
+builder.Services.Configure<Web3Options>(builder.Configuration.GetSection("Web3"));
 
 builder.Services.AddNFTContractEncoding();
 builder.Services.AddMetaMaskBlazor();

@@ -4,6 +4,7 @@
     {
         NotLive,
         Private,
-        Public
+        Public,
+        SoldOut
     }
 }

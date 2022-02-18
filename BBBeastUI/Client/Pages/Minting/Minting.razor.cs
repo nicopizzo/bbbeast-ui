@@ -2,6 +2,7 @@
 using BBBeast.UI.Shared.Models;
 using BBBeastUI.Pages.Minting.Components;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 using NFT.Contract.Query;
 
@@ -10,7 +11,7 @@ namespace BBBeastUI.Pages.Minting
     public partial class Minting : ComponentBase, IDisposable
     {
         [Inject]
-        protected Web3Options _web3Options { get; set; }
+        protected IOptions<Web3Options> _web3Options { get; set; }
 
         [Inject]
         protected IWalletInteractionService _walletInteractionService { get; set; }

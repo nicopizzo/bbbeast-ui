@@ -9,7 +9,7 @@
             <div class="d-flex align-items-center justify-content-start w-100">
                 <div class="d-flex">
                     <p class="pe-2">Contract:</p>
-                    <a href="@($"{Links.ETHERSCAN}/address/{_web3Options.ContractAddress}")" target="_blank">@_web3Options.ContractAddress?.Truncate(6, 4)</a>
+                    <a href="@($"{Links.ETHERSCAN}/address/{_web3Options.Value.ContractAddress}")" target="_blank">@_web3Options.Value.ContractAddress?.Truncate(6, 4)</a>
                 </div>
             </div>
 
@@ -22,9 +22,14 @@
                             account = walletInteraction?.selectedAddressENS;
                         }
                     }
-                    @if(walletInteraction == null || walletInteraction.isLoading)
+
+                    @if(walletInteraction == null || walletInteraction.isLoading || _MintResult == null)
                     {
                         <HxPlaceholder Columns=3 Size=PlaceholderSize.Large />
+                    }
+                    else if(_MintResult.ContractState == ContractState.NotLive || _MintResult.ContractState == ContractState.SoldOut)
+                    {
+                        // show nothing
                     }
                     else if (string.IsNullOrEmpty(account))
                     {
@@ -32,7 +37,7 @@
                     }
                     else
                     {
-                        <div class="px-2">@walletInteraction.accountMinted.ToString() / @_web3Options.MaxMintCount BBB</div>
+                        <div class="px-2">@walletInteraction.accountMinted.ToString() / @_web3Options.Value.MaxMintCount BBB</div>
                         <div id="addressJazzicon" class="px-2"></div>
                         <a href="@($"{Links.ETHERSCAN}/address/{walletInteraction.selectedAddress}")" target="_blank">@account</a>
                     }

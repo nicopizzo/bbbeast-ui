@@ -38,7 +38,7 @@ namespace BBBeast.UI.Server.Services
                 return await _NFTQuery.GetContractState();
             };
 
-            Task<QueryResult<ContractState>> stateTask = GetCachedValue("state", func, TimeSpan.FromMinutes(1));
+            Task<QueryResult<ContractState>> stateTask = GetCachedValue("state", func, TimeSpan.FromSeconds(30));
             await Task.WhenAll(new List<Task>() { supplyTask, stateTask });
 
             var supply = await supplyTask;

@@ -16,10 +16,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Havit.Blazor.Components.Web.Bootstrap" Version="2.1.2" />
+		<PackageReference Include="Havit.Blazor.Components.Web.Bootstrap" Version="2.2.0" />
 		<PackageReference Include="MetaMask.Blazor" Version="1.6.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.2" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

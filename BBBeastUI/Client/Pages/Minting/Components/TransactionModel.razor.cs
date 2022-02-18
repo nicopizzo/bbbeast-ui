@@ -36,17 +36,16 @@ namespace BBBeastUI.Pages.Minting.Components
         private async Task WatchTransaction(string tx, CancellationToken cancellationToken)
         {
             int count = 0;
-            await Task.Delay(1000);
             try
             {
                 while(transactionState == TransactionState.Pending)
                 {
+                    await Task.Delay(5000);
                     if (cancellationToken.IsCancellationRequested || count == 10) break;
                     var result = await _NFTQueryService.GetTransactionState(tx, cancellationToken);
                     transactionState = result.Data;
                     if (transactionState != TransactionState.Pending) break;
                     count++;
-                    await Task.Delay(10000);
                 }              
             }
             catch

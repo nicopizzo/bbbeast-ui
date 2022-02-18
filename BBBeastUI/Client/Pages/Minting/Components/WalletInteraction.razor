@@ -2,6 +2,10 @@
 {
     <label>Minting not yet live. Join the <a href="@Links.DISCORD">discord</a> for updates on minting.</label>
 }
+else if(_contractState == NFT.Contract.Query.ContractState.SoldOut)
+{
+    <label>We are sold out! Check out the collection on <a href="@Links.OPENSEA">Opensea</a>.</label>
+}
 else if (isLoading)
 {
     <HxPlaceholder Columns=5 Size=PlaceholderSize.Large />
@@ -14,7 +18,7 @@ else if (string.IsNullOrEmpty(selectedAddress))
 {
     <p>Please connect your wallet</p>
 }
-else if (_web3Options.ChainId != chainId)
+else if (_web3Options.Value.ChainId != chainId)
 {
     <p>Wrong network selected. Please change to Mainnet</p>
 }
@@ -37,7 +41,7 @@ else
             <h2 class="mx-3 pt-2" style="font-family: monospace;">@mintCount</h2>
             <div style="cursor: pointer;"><HxIcon Icon=FontAwesomeIcon.PlusCircle @onclick=AddCount CssClass="fa-4x mx-3" /></div>
         </div>
-        <button class="btn btn-primary" type="button" @onclick="Mint" disabled=@(accountMinted == null || accountMinted == _web3Options.MaxMintCount)>Mint</button>
+        <button class="btn btn-primary" type="button" @onclick="Mint" disabled=@(accountMinted == null || accountMinted == _web3Options.Value.MaxMintCount)>Mint</button>
     </div>
 }
 <TransactionModel @ref=_transactionModel />
